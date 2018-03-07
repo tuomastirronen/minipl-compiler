@@ -1,0 +1,3 @@
+<prog>      -> <stmts>
+<stmts>     -> <stmt> ";" (<stmt> ";")*   // at least one statement
+<stmt>      -> "var" <id> ":" <type> 

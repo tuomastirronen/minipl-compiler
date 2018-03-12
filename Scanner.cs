@@ -47,21 +47,30 @@ namespace MiniPL {
             if (Array.IndexOf(new []{'(', ')', ':', ';'}, c) > -1) {
                 if (c == ':' && lookAhead() == '=') {
                     c = next();
-                    return createToken(Token.ASS, ":=");
-                    // return new Token("assignment", ":=", col, row);
+                    return createToken(Token.ASS, ":=");                    
                 }
                 else {
                     // TODO
-                    return createToken(Token.ASS, c.ToString());
-                    // return new Token(c.ToString(), null, col, row);
+                    switch (c)
+                    {
+                        case '(':
+                            return createToken(Token.LPAR, c.ToString());
+                        case ')':
+                            return createToken(Token.RPAR, c.ToString());
+                        case ':':
+                            return createToken(Token.COL, c.ToString());
+                        case ';':
+                            return createToken(Token.SCOL, c.ToString());
+                        default:
+                            break;
+                    }
                 }
             }
 
             // range
             else if (c == '.' && lookAhead() == '.') {
                 c = next();
-                return createToken(Token.RANGE, "..");
-                // return new Token("operation", "..", col, row);
+                return createToken(Token.RANGE, "..");                
             }
 
             // operation
@@ -84,9 +93,29 @@ namespace MiniPL {
                     }                    
                 }
                 else {
+                    switch (c)
+                    {
+                        case '+':
+                            return createToken(Token.ADD, c.ToString());
+                        case '-':
+                            return createToken(Token.SUB, c.ToString());
+                        case '*':
+                            return createToken(Token.MUL, c.ToString());
+                        case '/':
+                            return createToken(Token.DIV, c.ToString());
+                        case '<':
+                            return createToken(Token.LT, c.ToString());
+                        case '=':
+                            return createToken(Token.EQ, c.ToString());
+                        case '&':
+                            return createToken(Token.AND, c.ToString());
+                        case '!':
+                            return createToken(Token.NEG, c.ToString());
+                        default:
+                            break;
+                    }
                     // TODO
-                    return createToken(Token.RANGE, "..");
-                    // return new Token("operation", c.ToString(), col, row);                                        
+                    return createToken(Token.RANGE, "..");                                                        
                 }                
             }
 
@@ -97,8 +126,7 @@ namespace MiniPL {
                     c = next();
                     s += c.ToString(); 
                 }
-                return createToken(Token.ID, s.ToString());
-                // return new Token("identifier", s.ToString(), col, row);
+                return createToken(Token.ID, s.ToString());                
             }
 
             // integer
@@ -109,8 +137,7 @@ namespace MiniPL {
                     i += c.ToString();
                 }
                 
-                return createToken(Token.INT, i.ToString());
-                // return new Token("integer", i.ToString(), col, row);
+                return createToken(Token.INT, i.ToString());                
             }
 
             // string literal
@@ -122,12 +149,10 @@ namespace MiniPL {
                     s += c.ToString();
                 }
                 next(); // eat closing "
-                return createToken(Token.STRING, s.ToString());
-                // return new Token("string", s.ToString(), col, row);
+                return createToken(Token.STRING, s.ToString());                
             }
 
-            return createToken(Token.ERROR, c.ToString());
-            // return new Token("error", c.ToString(), col, row);
+            return createToken(Token.ERROR, c.ToString());        
         }
 	}
 }

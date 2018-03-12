@@ -7,8 +7,8 @@ namespace MiniPL {
         Scanner scanner;
         Token currentToken = null;
 
-        public Parser(Scanner sc) {
-            this.scanner = sc;
+        public Parser(Scanner scanner) {
+            this.scanner = scanner;
         }
         
         public void parse_() {
@@ -39,33 +39,33 @@ namespace MiniPL {
         }
 
         // # compare the current token type with the passed token
-        // # type and if they match then "eat" the current token
+        // # type and if they match then "match" the current token
         // # and assign the next token to the self.current_token,
         // # otherwise raise an exception. 
-        private void eat(string type) {
-            // Console.WriteLine("eat " + type);
+        private void match(string type) {
+            // Console.WriteLine("match " + type);
             if (currentToken.type == type) {
                 currentToken = scanner.nextToken();
             }                
             else {
                 error("syntax error");
             }                
-        }       
+        }
 
         private Node factor() {
             // factor : INTEGER | LPAREN expr RPAREN
             Token token = currentToken;
             // Console.WriteLine("factor");   
             if (token.type == "integer") {
-                eat("integer");
-                // Console.WriteLine("create integer");
+                match("integer");
+                // Console.WriteLine("crmatche integer");
                 return new Node(token);
             }
                 
             else if (token.type == "(") {
-                eat("(");
+                match("(");
                 Node node = expr();
-                eat(")");
+                match(")");
                 return node;
             }
             error("factor error");
@@ -81,13 +81,13 @@ namespace MiniPL {
             while (currentToken.type == "operation") {
                 Token token = currentToken;
                 // if (token.type == "*") {
-                //     eat("*");
+                //     match("*");
                 // }
                 // else if (token.type == "/") {
-                //     eat("/");
+                //     match("/");
                 // }
 
-                eat(token.type);
+                match(token.type);
 
                 node = new Node(token, node, factor());
 
@@ -106,12 +106,12 @@ namespace MiniPL {
             while (currentToken.type == "operation") {
                 Token token = currentToken;
                 // if (token.type == "+") {
-                //     eat("+");
+                //     match("+");
                 // }
                 // else if (currentToken.type == "-") {
-                //     eat("-");
+                //     match("-");
                 // }
-                eat(token.type);
+                match(token.type);
                 node = new Node(token, node, term());
 
             }

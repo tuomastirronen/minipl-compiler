@@ -17,7 +17,7 @@ namespace MiniPL {
         }
 
         public override string ToString() {
-            return this.token.lexeme;
+            return this.token.value;
         }
 
         public string displayNode()
@@ -33,7 +33,7 @@ namespace MiniPL {
                 right.displayNode(output, depth+1);
             }                
             output.Append('\t', depth);
-            output.AppendLine(token.lexeme);
+            output.AppendLine(token.value);
 
 
             if (left != null) {

@@ -3,34 +3,51 @@ using System.Linq;
 
 namespace MiniPL {
     public class Token {
+
+        // Types
+        public static string ID = "identifier";
+        public static string KW = "keyword";
+        public static string LPAR = "lpar";
+        public static string RPAR = "rpar";
+        public static string MUL = "multiplication";
+        public static string DIV = "division";
+        public static string ADD = "addition";
+        public static string SUB = "substraction";
+        public static string EQ = "equals";
+        public static string NEG = "negation";
+        public static string LT = "lthan";
+        public static string AND = "and";
+        public static string COL = "colon";
+        public static string SCOL = "semicolon";        
+        public static string ASS = "assignment";
+        public static string RANGE = "range";
+        public static string INT = "integer";
+        public static string STRING = "string";
+        public static string ERROR = "error";
         
         public string[] KEYWORDS = new []{"var", "for", "end", "in", "do", "read", "print", "int", "string", "bool", "assert"};
         
-        public string symbol;
-		public string lexeme;
+        public string type;
+		public string value;
         public int col;
         public int row;
 
-        public Token(string symbol, string lexeme, int col, int row) {
+        public Token(string type, string value, int row, int col) {
 
-            this.col = col;
             this.row = row;
-            if (KEYWORDS.Contains(lexeme)) {                
-                this.symbol = "keyword";
+            this.col = col;            
+
+            if (KEYWORDS.Contains(value)) {                
+                this.type = KW;
             }   
             else {
-                this.symbol = symbol;
+                this.type = type;
             }            
-            this.lexeme = lexeme;
+            this.value = value;
         }
 
-        public override string ToString() {
-            // return "Token -> "
-            // + "row: " + this.row
-            // + "\tcol: " + this.col            
-            // + "\tlexeme: " + this.lexeme
-            // + "\tsymbol: " + this.symbol;
-            return "(symbol: " + this.symbol + ", lexeme: " + this.lexeme + ")";
+        public override string ToString() {            
+            return "row: " + this.row + ",\t col: " + this.col + ",\t(type: " + this.type + ",\tvalue: " + this.value + ")";
         }
     }
 }

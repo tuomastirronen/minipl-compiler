@@ -4,36 +4,69 @@ using System.Collections.Generic;
 namespace MiniPL {
     
 	public class Scanner {        
-        public Source source;
+        public Source source;        
+
         int cursor;
-        int col;
-        int row;
-        public Scanner(Source src) {
-            this.source = src;            
+        int col = 0;
+        int row = 1;
+
+        public Scanner(Source source) {
+            this.source = source;            
         }
-        public Token nextToken() {
+
+        private Token createToken(string type, string value) {
+            return new Token(type, value, row, col);
+        }
+        
+        public bool hasNext() {
+            return cursor < source.content.Length;
+        }
+        private char next(int steps = 1) {
+            cursor += (steps);
+            col++;    
+            return source.content[cursor - 1];
+        }
+        private char lookAhead(int steps = 0) {            
+            return source.content[cursor + steps];               
+        }
+        private void skipWhiteSpace() {
+            while (char.IsWhiteSpace(lookAhead())) {
+                if (lookAhead().Equals('\n')) {
+                    row++;
+                    col = 0;
+                }
+                next();
+            }            
+        }
+
+        public Token nextToken() {            
             skipWhiteSpace();
             char c = next();            
             
             // special
-            if (Array.IndexOf(new []{'(', '(', ')', ':', ';'}, c) > -1) {
+            if (Array.IndexOf(new []{'(', ')', ':', ';'}, c) > -1) {
                 if (c == ':' && lookAhead() == '=') {
                     c = next();
-                    return new Token("assignment", ":=", col, row);
+                    return createToken(Token.ASS, ":=");
+                    // return new Token("assignment", ":=", col, row);
                 }
                 else {
-                    return new Token(c.ToString(), null, col, row);
+                    // TODO
+                    return createToken(Token.ASS, c.ToString());
+                    // return new Token(c.ToString(), null, col, row);
                 }
             }
 
             // range
             else if (c == '.' && lookAhead() == '.') {
                 c = next();
-                return new Token("operation", "..", col, row);
+                return createToken(Token.RANGE, "..");
+                // return new Token("operation", "..", col, row);
             }
 
             // operation
             else if (Array.IndexOf(new []{'+', '-', '*', '/', '<', '=', '&', '!'}, c) > -1) {
+                
                 // comments
                 if (c == '/' && lookAhead() == '*') {
                     next();
@@ -51,7 +84,9 @@ namespace MiniPL {
                     }                    
                 }
                 else {
-                    return new Token("operation", c.ToString(), col, row);                                        
+                    // TODO
+                    return createToken(Token.RANGE, "..");
+                    // return new Token("operation", c.ToString(), col, row);                                        
                 }                
             }
 
@@ -62,7 +97,8 @@ namespace MiniPL {
                     c = next();
                     s += c.ToString(); 
                 }
-                return new Token("identifier", s.ToString(), col, row);
+                return createToken(Token.ID, s.ToString());
+                // return new Token("identifier", s.ToString(), col, row);
             }
 
             // integer
@@ -72,7 +108,9 @@ namespace MiniPL {
                     c = next();
                     i += c.ToString();
                 }
-                return new Token("integer", i.ToString(), col, row);
+                
+                return createToken(Token.INT, i.ToString());
+                // return new Token("integer", i.ToString(), col, row);
             }
 
             // string literal
@@ -84,26 +122,12 @@ namespace MiniPL {
                     s += c.ToString();
                 }
                 next(); // eat closing "
-                return new Token("string", s.ToString(), col, row);
+                return createToken(Token.STRING, s.ToString());
+                // return new Token("string", s.ToString(), col, row);
             }
 
-            return new Token("error", c.ToString(), col, row);
-        }
-        public bool hasNext() {
-            return cursor < source.content.Length;
-        }
-        private char next(int steps = 1) {            
-            cursor += (steps);
-            col += (steps);
-            return source.content[cursor - 1];
-        }
-        private char lookAhead(int offset = 0) {            
-            return source.content[cursor + offset];               
-        }
-        private void skipWhiteSpace() {
-            while (char.IsWhiteSpace(lookAhead())) {           
-                next();
-            }            
+            return createToken(Token.ERROR, c.ToString());
+            // return new Token("error", c.ToString(), col, row);
         }
 	}
 }

@@ -10,8 +10,9 @@ namespace Compiler
         {
             Parser p = new Parser(new Scanner(new Source(args[0])));
                
-            Node root = p.parse();
-            // Console.WriteLine("AST: " + root.displayNode());
+            Node program = p.parse();            
+            
+            program.mermaid("", true, true);
         }
     }
 }

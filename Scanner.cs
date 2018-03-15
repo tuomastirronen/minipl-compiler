@@ -18,7 +18,7 @@ namespace MiniPL {
             return new Token(type, value, row, col);
         }
         
-        public bool hasNext() {
+        public bool hasNext() {            
             return cursor < source.content.Length;
         }
         private char next(int steps = 1) {
@@ -152,7 +152,7 @@ namespace MiniPL {
                 return createToken(Token.STRING, s.ToString());                
             }
 
-            return createToken(Token.ERROR, c.ToString());        
+            return createToken(Token.UNKNOWN, c.ToString());        
         }
 	}
 }

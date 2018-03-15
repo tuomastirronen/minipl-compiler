@@ -23,7 +23,9 @@ namespace MiniPL {
         public static string RANGE = "range";
         public static string INT = "integer";
         public static string STRING = "string";
-        public static string ERROR = "error";
+        public static string BOOL = "boolean";
+        public static string EOF = "eof";
+        public static string UNKNOWN = "unknown";
         
         public string[] KEYWORDS = new []{"var", "for", "end", "in", "do", "read", "print", "int", "string", "bool", "assert"};
         
@@ -32,7 +34,7 @@ namespace MiniPL {
         public int col;
         public int row;
 
-        public Token(string type, string value, int row, int col) {
+        public Token(string type, string value, int row = 0, int col = 0) {
 
             this.row = row;
             this.col = col;            
@@ -47,7 +49,8 @@ namespace MiniPL {
         }
 
         public override string ToString() {            
-            return "row: " + this.row + ",\t col: " + this.col + ",\t(type: " + this.type + ",\tvalue: " + this.value + ")";
+            // return "row: " + this.row + ",\t col: " + this.col + ",\t(type: " + this.type + ",\tvalue: " + this.value + ")";
+            return "(" + this.type + ", " + this.value + ")";
         }
     }
 }

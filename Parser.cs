@@ -9,12 +9,6 @@ namespace MiniPL {
 
         public Parser(Scanner scanner) {
             this.scanner = scanner;
-        }        
-
-        private void error(string msg) {
-            // Console.WriteLine(msg);
-            // Environment.Exit(0);
-            throw new System.Exception(msg);
         }
 
         private void nextToken() {
@@ -27,13 +21,11 @@ namespace MiniPL {
             Console.WriteLine("token: " + currentToken);
         }
 
-        private bool accept(string type) {
-            Console.WriteLine(currentToken.type + " vs. " + type);
+        private bool accept(string type) {            
             return currentToken.type == type;
         }
 
-        private bool accept_keyword(string value) {
-            Console.WriteLine(currentToken.value + " vs. " + value);
+        private bool accept_keyword(string value) {            
             return currentToken.value == value;
         }
 
@@ -42,8 +34,8 @@ namespace MiniPL {
             if (currentToken.type == type) {
                 nextToken();
             }                
-            else {
-                error("syntax error: expected " + type + ", got " + currentToken.type + " '" + currentToken.value + "'");
+            else {                
+                new SyntaxError(currentToken, "Syntax Error: Expected " + type + ", got " + currentToken.type + " '" + currentToken.value + "'");
             }                
         }
         
@@ -52,8 +44,8 @@ namespace MiniPL {
             if (currentToken.value == value) {
                 nextToken();
             }                
-            else {
-                error("syntax error: expected " + value + ", got " + currentToken.value);
+            else {                
+                new SyntaxError(currentToken, "Syntax Error: Expected " + value + ", got " + currentToken.value);
             }                
         }
 
@@ -106,7 +98,7 @@ namespace MiniPL {
                         else if (accept_keyword("bool")) {
                             match_keyword("bool");
                         }
-                        else error("syntax error: expected int, string or bool, got " + currentToken.value);
+                        else new SyntaxError(currentToken, "Syntax Error: Expected int, string or bool, got " + currentToken.value);
                         
                         if (accept(Token.ASS)) {
                             statement.addChild(new Node(currentToken));
@@ -162,7 +154,7 @@ namespace MiniPL {
                         match(Token.RPAR);
                         break;
                     default:
-                        error("syntax error: expected var, for, read, print or assert, got " + currentToken.value);
+                        new SyntaxError(currentToken, "Syntax Error: Expected keyword var, for, read, print or assert, got " + currentToken.value);                        
                         break;
                 }
             }
@@ -203,8 +195,8 @@ namespace MiniPL {
                     factor.addChild(new Node(currentToken));         
                     match(Token.RPAR);
                     break;
-                default:
-                    error("syntax error: expected integer, string, bool, identifier or (, got " + currentToken.value);
+                default:                    
+                    new SyntaxError(currentToken, "Syntax Error: Expected integer, string, bool, identifier or (, got " + currentToken.value);
                     break;
             }
 
@@ -216,7 +208,7 @@ namespace MiniPL {
             Node term = new Node("term");
 
             term.addChild(factor());
-            while (currentToken.type == Token.MUL | currentToken.type == Token.DIV) {
+            while (currentToken.type == Token.MUL | currentToken.type == Token.DIV | currentToken.type == Token.LT | currentToken.type == Token.AND | currentToken.type == Token.EQ) {
                 term.addChild(new Node(currentToken));                 
                 nextToken();
                 term.addChild(factor());

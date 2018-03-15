@@ -151,8 +151,9 @@ namespace MiniPL {
                 next(); // eat closing "
                 return createToken(Token.STRING, s.ToString());                
             }
-
-            return createToken(Token.UNKNOWN, c.ToString());        
+            
+            new LexicalError(createToken(Token.UNKNOWN, c.ToString()));
+            return null;
         }
 	}
 }

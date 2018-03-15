@@ -79,20 +79,4 @@ namespace MiniPL {
             return this.value;
         }
     }    
-
-    public class Program : Node {
-        
-        public Program() {                          
-            this.token = null;
-            this.value = "program";
-        }
-    }
-
-    public class Statement : Node {
-        
-        public Statement() {                          
-            this.token = null;
-            this.value = "statement";
-        }
-    }
 }

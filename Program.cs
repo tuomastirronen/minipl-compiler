@@ -13,6 +13,7 @@ namespace Compiler
             Node program = p.parse();            
             
             program.mermaid("", true, true);
+
         }
     }
 }

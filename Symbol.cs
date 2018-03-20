@@ -19,15 +19,13 @@ namespace MiniPL {
 
         public List<Symbol> symbols = new List<Symbol>();
 
-		public SymbolTable() {
-
-        }
+		public SymbolTable() { }
 
         public void declare(string name) {
             symbols.Add(new Symbol(name, Token.INT));
         }
 
-        public void assign(string name, string value) {
+        public void assign(string name, string value) {            
             bool found = false;
             foreach (var symbol in symbols) {
                 if(symbol.name.Equals(name))

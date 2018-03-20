@@ -81,29 +81,37 @@ namespace MiniPL {
                 {                    
                     case "for":
                         // for loop
-                        statement.addChild(new Node(currentToken));
+                        Node forLoop = new ForLoopNode();
+                        // statement.addChild(new Node(currentToken));
                         match_keyword("for");
-                        statement.addChild(new Node(currentToken));
-                        match(Token.ID);
-                        statement.addChild(new Node(currentToken));
-                        match_keyword("in");
-                        statement.addChild(expr());
-                        statement.addChild(new Node(currentToken));
+                        Node control = new ControlNode();
+                        Node operation = new BinOpNode("<");
+                        Node assertion = new AssertNode();
+                        Node ass = new AssignmentNode();                    
+                        Node identifier = new IdNode(currentToken);
+                        ass.addChild(identifier);
+                        operation.addChild(identifier);
+
+                        match(Token.ID);                        
+                        match_keyword("in");                        
+                        ass.addChild(expr());                        
                         match(Token.RANGE);
-                        statement.addChild(expr());
-                        statement.addChild(new Node(currentToken));
+                        operation.addChild(expr());                   
                         match_keyword("do");
+                        assertion.addChild(operation);
+                        control.addChild(ass);
+                        control.addChild(assertion);                        
+                        forLoop.addChild(control);
+                        statement.addChild(forLoop);
 
                         Node stmts = new Node("stmts");
                         
-                        while (!accept_keyword("end")) {                            
+                        while (!accept_keyword("end")) {
                             stmts.addChild(stmt());
                         }
-                        statement.addChild(stmts);
-
-                        statement.addChild(new Node(currentToken));
-                        match_keyword("end");
-                        statement.addChild(new Node(currentToken));
+                        forLoop.addChild(stmts);
+                        
+                        match_keyword("end");                        
                         match_keyword("for");
                         break;
                     case "read":                        
@@ -119,14 +127,13 @@ namespace MiniPL {
                         match_keyword("print");
                         print.addChild(expr());
                         break;
-                    case "assert":
-                        statement.addChild(new Node("assert"));
-                        match_keyword("assert");
-                        statement.addChild(new Node(currentToken));
+                    case "assert":                        
+                        Node assert = new AssertNode();                        
+                        match_keyword("assert"); 
                         match(Token.LPAR);                        
-                        statement.addChild(expr());
-                        statement.addChild(new Node(currentToken));
+                        assert.addChild(expr());                        
                         match(Token.RPAR);
+                        statement.addChild(assert);                        
                         break;
                     case "var":
                         // variable declaration                        
@@ -218,20 +225,11 @@ namespace MiniPL {
             Node left = factor();            
 
             while (currentToken.type == Token.MUL | currentToken.type == Token.DIV | currentToken.type == Token.LT | currentToken.type == Token.AND | currentToken.type == Token.EQ) {                
-                if (currentToken.type == Token.MUL) {
-                    Node node = new MultiplicationNode();                    
-                    nextToken();
-                    node.addChild(left);
-                    node.addChild(factor());
-                    left = node;
-                }
-                else if (currentToken.type == Token.DIV) {
-                    Node node = new DivisionNode();                    
-                    nextToken();
-                    node.addChild(left);
-                    node.addChild(factor());
-                    left = node;
-                }
+                Node node = new BinOpNode(currentToken);
+                nextToken();
+                node.addChild(left);
+                node.addChild(factor());
+                left = node;
             }
 
             return left;  
@@ -244,23 +242,12 @@ namespace MiniPL {
             
             Node left = term();
 
-            while (currentToken.type == Token.ADD | currentToken.type == Token.SUB) {
-                if (currentToken.type == Token.ADD) {
-                    Node node = new AdditionNode();                    
+            while (currentToken.type == Token.ADD | currentToken.type == Token.SUB) {                
+                    Node node = new BinOpNode(currentToken);
                     nextToken();
                     node.addChild(left);
                     node.addChild(term());
-                    left = node;
-                    
-                } 
-                else if (currentToken.type == Token.SUB)  {
-                    Node node = new SubstractionNode();                    
-                    nextToken();
-                    node.addChild(left);
-                    node.addChild(term());
-                    left = node;
-                    
-                }                                           
+                    left = node;                                   
             }
 
             return left;  

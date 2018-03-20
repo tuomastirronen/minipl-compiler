@@ -9,10 +9,10 @@ namespace MiniPL {
         
         public Token token;
         public int id;
-        public string value;        
+        public string value;
         public List<Node> children = new List<Node>();
         public static SymbolTable symbolTable = new SymbolTable();
-        static int count = 0; // for mermaid        
+        static int count = 0; // for mermaid
 
         public virtual int interpret() {
             foreach (Node child in children)
@@ -107,7 +107,55 @@ namespace MiniPL {
         public StatementNode() {            
             generateId();
         }
-    }   
+    }
+
+    // For Loop
+    public class ForLoopNode : Node {
+        public ForLoopNode() {            
+            generateId();
+        }
+
+        public override int interpret() {            
+            Node control = getLeft();
+            
+            // Control variable assignment            
+            int counter = control.getLeft().interpret();
+            
+            while (control.getRight().interpret() != 0) {                
+                counter++;
+                symbolTable.assign(control.getLeft().getLeft().value, counter.ToString());
+                // Interpret
+                getRight().interpret();
+            }            
+            return 1;
+        }
+    }
+
+    // Control
+    public class ControlNode : Node {
+        public ControlNode() {                  
+            generateId();
+        }        
+        public override int interpret() {
+            return 0;
+        }
+    }
+
+    // Assert
+    public class AssertNode : Node {
+        public AssertNode() {                  
+            generateId();
+        }        
+        public override int interpret() {
+            if (getLeft().interpret() != 0) {
+                // Assertion true
+                return 1;
+            }
+            // Assertion false
+            return 0;
+        }
+    }
+
 
     // Print
     public class PrintNode : Node {
@@ -140,7 +188,7 @@ namespace MiniPL {
             generateId();
         }
 
-        public override int interpret() {                           
+        public override int interpret() {
             symbolTable.declare(getLeft().value);        
             return 1;
         }
@@ -152,13 +200,9 @@ namespace MiniPL {
             generateId();
         }
 
-        public override int interpret() {            
-            string name = getLeft().value;
-            string value = getRight().interpret().ToString();            
-                     
-            symbolTable.assign(name, value);
-            
-            return 1;
+        public override int interpret() {
+            symbolTable.assign(getLeft().value, getRight().interpret().ToString());            
+            return getRight().interpret();
         }
     }
 
@@ -192,41 +236,46 @@ namespace MiniPL {
             return symbolTable.lookup(this.value);
         }
     }
-    // Addition
-    public class AdditionNode : Node {
-        public AdditionNode() {            
+
+    // Operations
+
+    // Binary operation
+    public class BinOpNode : Node {
+        public BinOpNode(string operand) {
+            this.value = operand;
             generateId();
         }
 
-        public override int interpret() {            
-            return this.getLeft().interpret() + this.getRight().interpret();
-        }
-    }
-    // Substraction
-    public class SubstractionNode : Node {
-        public SubstractionNode() {            
+        public BinOpNode(Token token) {
+            this.value = token.value;
             generateId();
         }
-        public override int interpret() {            
-            return this.getLeft().interpret() - this.getRight().interpret();
-        }
-    }
-    // Multiplication
-    public class MultiplicationNode : Node {
-        public MultiplicationNode() {            
-            generateId();
-        }
-        public override int interpret() {            
-            return this.getLeft().interpret() * this.getRight().interpret();
-        }
-    }
-    // Division
-    public class DivisionNode : Node {
-        public DivisionNode() {            
-            generateId();
-        }
-        public override int interpret() {            
-            return this.getLeft().interpret() / this.getRight().interpret();
+
+        public override int interpret() {
+            switch (this.value)
+            {
+                case "*":
+                    return this.getLeft().interpret() * this.getRight().interpret();
+                case "/":
+                    return this.getLeft().interpret() / this.getRight().interpret();
+                case "+":
+                    return this.getLeft().interpret() + this.getRight().interpret();
+                case "-":
+                    return this.getLeft().interpret() - this.getRight().interpret();
+                case "=":
+                    if (this.getLeft().interpret() == this.getRight().interpret()) {
+                        return 1;
+                    }
+                    else return 0;
+                case "<":                    
+                    if (this.getLeft().interpret() < this.getRight().interpret()) {
+                        return 1;
+                    }
+                    else return 0;
+                default:
+                    break;
+            }
+            return 0;
         }
     }
 }

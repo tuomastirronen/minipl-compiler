@@ -43,4 +43,13 @@ namespace MiniPL {
             handleError();
         }      
     }
+
+    public class SemanticError : Error {
+        public SemanticError() { }
+
+        public SemanticError(string msg) {
+            this.msg = msg;            
+            handleError();
+        }      
+    }
 }

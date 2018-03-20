@@ -37,7 +37,7 @@ namespace MiniPL {
         public Token(string type, string value, int row = 0, int col = 0) {
 
             this.row = row;
-            this.col = col;            
+            this.col = col;
 
             if (KEYWORDS.Contains(value)) {                
                 this.type = KW;
@@ -48,8 +48,7 @@ namespace MiniPL {
             this.value = value;
         }
 
-        public override string ToString() {            
-            // return "row: " + this.row + ",\t col: " + this.col + ",\t(type: " + this.type + ",\tvalue: " + this.value + ")";
+        public override string ToString() {
             return "(" + this.type + ", " + this.value + ")";
         }
     }

@@ -1,2 +1,2 @@
 var X : int := 4 + (6 * 2);
-print 3 + 8;
+print X;

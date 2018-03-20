@@ -1,0 +1,3 @@
+var nTimes : int := 0;
+read nTimes;
+print nTimes;

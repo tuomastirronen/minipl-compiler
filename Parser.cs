@@ -18,7 +18,7 @@ namespace MiniPL {
             else {
                 currentToken = new Token(Token.EOF, null);
             }
-            Console.WriteLine("token: " + currentToken);
+            // Console.WriteLine("token: " + currentToken);
         }
 
         private bool accept(string type) {            
@@ -30,7 +30,7 @@ namespace MiniPL {
         }
 
         private void match(string type) {
-            Console.WriteLine("\t-> match " + type);
+            // Console.WriteLine("\t-> match " + type);
             if (currentToken.type == type) {
                 nextToken();
             }                
@@ -40,7 +40,7 @@ namespace MiniPL {
         }
         
         private void match_keyword(string value) {
-            Console.WriteLine("\t-> match keyword " + value);       
+            // Console.WriteLine("\t-> match keyword " + value);       
             if (currentToken.value == value) {
                 nextToken();
             }                
@@ -56,7 +56,7 @@ namespace MiniPL {
         private Node prog() {
             nextToken();
 
-            Node program = new Node("program");
+            Node program = new ProgramNode();
 
             program.addChild(stmts());
 
@@ -74,38 +74,11 @@ namespace MiniPL {
         }
 
         private Node stmt() {
-            Node statement = new Node("stmt");
+            Node statement = new StatementNode();
 
             if (currentToken.type == Token.KW) {
                 switch (currentToken.value)
-                {
-                    case "var":
-                        // variable declaration
-                        statement.addChild(new Node(currentToken));        
-                        match_keyword("var");
-                        statement.addChild(new Node(currentToken));
-                        match(Token.ID);
-                        statement.addChild(new Node(currentToken));
-                        match(Token.COL);
-                        statement.addChild(new Node(currentToken));
-                        
-                        if (accept_keyword("int")) {
-                            match_keyword("int");
-                        }
-                        else if (accept_keyword("string")) {
-                            match_keyword("string");
-                        }
-                        else if (accept_keyword("bool")) {
-                            match_keyword("bool");
-                        }
-                        else new SyntaxError(currentToken, "Syntax Error: Expected int, string or bool, got " + currentToken.value);
-                        
-                        if (accept(Token.ASS)) {
-                            statement.addChild(new Node(currentToken));
-                            match(Token.ASS);                        
-                            statement.addChild(expr());
-                        }                        
-                        break;
+                {                    
                     case "for":
                         // for loop
                         statement.addChild(new Node(currentToken));
@@ -133,16 +106,18 @@ namespace MiniPL {
                         statement.addChild(new Node(currentToken));
                         match_keyword("for");
                         break;
-                    case "read":
-                        statement.addChild(new Node("read"));
+                    case "read":                        
+                        Node read = new ReadNode();
+                        statement.addChild(read);
                         match_keyword("read");
-                        statement.addChild(new Node(currentToken));
+                        read.addChild(new IdNode(currentToken));
                         match(Token.ID);
                         break;
                     case "print":
-                        statement.addChild(new Node("print"));
+                        Node print = new PrintNode();
+                        statement.addChild(print);
                         match_keyword("print");
-                        statement.addChild(expr());
+                        print.addChild(expr());
                         break;
                     case "assert":
                         statement.addChild(new Node("assert"));
@@ -153,6 +128,38 @@ namespace MiniPL {
                         statement.addChild(new Node(currentToken));
                         match(Token.RPAR);
                         break;
+                    case "var":
+                        // variable declaration                        
+                        Node declaration = new DeclarationNode();
+                        match_keyword("var");
+                        Node id = new IdNode(currentToken);
+                        declaration.addChild(id);
+                        match(Token.ID);                        
+                        match(Token.COL);
+                        declaration.addChild(new Node(currentToken));
+
+                        statement.addChild(declaration);
+                        
+                        if (accept_keyword("int")) {
+                            match_keyword("int");
+                        }
+                        else if (accept_keyword("string")) {
+                            match_keyword("string");
+                        }
+                        else if (accept_keyword("bool")) {
+                            match_keyword("bool");
+                        }
+
+                        else new SyntaxError(currentToken, "Syntax Error: Expected int, string or bool, got " + currentToken.value);
+                        
+                        if (accept(Token.ASS)) {
+                            Node assignment = new AssignmentNode();
+                            assignment.addChild(id);
+                            match(Token.ASS);
+                            assignment.addChild(expr());          
+                            statement.addChild(assignment);
+                        }                        
+                        break;
                     default:
                         new SyntaxError(currentToken, "Syntax Error: Expected keyword var, for, read, print or assert, got " + currentToken.value);                        
                         break;
@@ -160,11 +167,14 @@ namespace MiniPL {
             }
             if (currentToken.type == Token.ID) {
                 // assignment
-                statement.addChild(new Node(currentToken));
+                // statement.addChild(new IdNode(currentToken));
+                Node id = new IdNode(currentToken);
                 match(Token.ID);
-                statement.addChild(new Node(currentToken));
+                Node assignment = new AssignmentNode();
+                assignment.addChild(id);                
                 match(Token.ASS);                        
-                statement.addChild(expr());
+                assignment.addChild(expr());
+                statement.addChild(assignment);
             }
 
             match(Token.SCOL);
@@ -172,27 +182,26 @@ namespace MiniPL {
         }
 
         private Node factor() {
-            // factor : INTEGER | LPAREN expr RPAREN
-            Node factor = new Node("factor");
+            // factor : INTEGER | LPAREN expr RPAREN            
+            Node node = new Node();
+
             switch (currentToken.type)
             {                
-                case "integer":
-                    factor.addChild(new Node(currentToken));
+                case "integer":                    
+                    node = new IntNode(currentToken);
                     match(Token.INT);
                     break;
-                case "string":
-                    factor.addChild(new Node(currentToken));
+                case "string":                    
+                    node = new StrNode(currentToken);
                     match(Token.STRING);
                     break;
-                case "identifier":
-                    factor.addChild(new Node(currentToken));
+                case "identifier":                    
+                    node = new IdNode(currentToken);
                     match(Token.ID);
                     break;
-                case "lpar":
-                    factor.addChild(new Node(currentToken));
-                    nextToken();
-                    factor.addChild(expr());
-                    factor.addChild(new Node(currentToken));         
+                case "lpar":                    
+                    nextToken();                    
+                    node = expr();                     
                     match(Token.RPAR);
                     break;
                 default:                    
@@ -200,36 +209,61 @@ namespace MiniPL {
                     break;
             }
 
-            return factor;
+            return node;
         }        
 
         private Node term() {
             // term : factor ((MUL | DIV) factor)*
-            Node term = new Node("term");
+            
+            Node left = factor();            
 
-            term.addChild(factor());
-            while (currentToken.type == Token.MUL | currentToken.type == Token.DIV | currentToken.type == Token.LT | currentToken.type == Token.AND | currentToken.type == Token.EQ) {
-                term.addChild(new Node(currentToken));                 
-                nextToken();
-                term.addChild(factor());
+            while (currentToken.type == Token.MUL | currentToken.type == Token.DIV | currentToken.type == Token.LT | currentToken.type == Token.AND | currentToken.type == Token.EQ) {                
+                if (currentToken.type == Token.MUL) {
+                    Node node = new MultiplicationNode();                    
+                    nextToken();
+                    node.addChild(left);
+                    node.addChild(factor());
+                    left = node;
+                }
+                else if (currentToken.type == Token.DIV) {
+                    Node node = new DivisionNode();                    
+                    nextToken();
+                    node.addChild(left);
+                    node.addChild(factor());
+                    left = node;
+                }
             }
 
-            return term;  
+            return left;  
         }
+
         private Node expr() {            
             // expr   : term ((PLUS | MINUS) term)*
             // term   : factor ((MUL | DIV) factor)*
             // factor : INTEGER | LPAREN expr RPAREN            
-            Node expr = new Node("expr");
-            expr.addChild(term());
+            
+            Node left = term();
 
             while (currentToken.type == Token.ADD | currentToken.type == Token.SUB) {
-                expr.addChild(new Node(currentToken));
-                nextToken();
-                expr.addChild(term());
+                if (currentToken.type == Token.ADD) {
+                    Node node = new AdditionNode();                    
+                    nextToken();
+                    node.addChild(left);
+                    node.addChild(term());
+                    left = node;
+                    
+                } 
+                else if (currentToken.type == Token.SUB)  {
+                    Node node = new SubstractionNode();                    
+                    nextToken();
+                    node.addChild(left);
+                    node.addChild(term());
+                    left = node;
+                    
+                }                                           
             }
 
-            return expr;  
+            return left;  
         }
     }
 }

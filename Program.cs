@@ -10,10 +10,20 @@ namespace Compiler
         {
             Parser p = new Parser(new Scanner(new Source(args[0])));
                
-            Node program = p.parse();            
+            Node ast = p.parse();
             
-            program.mermaid("", true, true);
-
+            if (args.Length > 1) {
+                if (args[1] == "mermaid") {
+                    ast.mermaid("", true, true);
+                }
+                else if (args[1] == "tree") {
+                    ast.print("", true);
+                }
+                else if (args[1] == "interpret") {
+                    ast.interpret();
+                }
+            }
+                    
         }
     }
 }

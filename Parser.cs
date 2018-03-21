@@ -77,117 +77,120 @@ namespace MiniPL {
             Node statement = new StatementNode();
 
             if (currentToken.type == Token.KW) {
-                switch (currentToken.value)
-                {                    
-                    case "for":
-                        // for loop
-                        Node forLoop = new ForLoopNode();
-                        // statement.addChild(new Node(currentToken));
-                        match_keyword("for");
-                        Node control = new ControlNode();
+                if (currentToken.value == "for") {
+                    // for loop
+                    Node forLoop = new ForLoopNode();                    
+                    match_keyword("for");
 
-                        // Build assertion
-                        Node lt = new BinOpNode("<");
-                        Node eq = new BinOpNode("=");                        
-                        Node add = new BinOpNode("+");
+                    // Control node
+                    Node control = new ControlNode();
 
-                        add.addChild(lt);
-                        add.addChild(eq);
+                    // Build assertion
+                    Node assertion = new AssertNode();
 
-                        Node assertion = new AssertNode();
-                        Node ass = new AssignmentNode();                    
-                        Node identifier = new IdNode(currentToken);
-                        ass.addChild(identifier);
+                    // Construct <= by adding LT and EQ
+                    Node lt = new BinOpNode("<");
+                    Node eq = new BinOpNode("=");                        
+                    Node add = new BinOpNode("+");
 
-                        lt.addChild(identifier);
-                        eq.addChild(identifier);
+                    add.addChild(lt);
+                    add.addChild(eq);                    
 
-                        match(Token.ID);                        
-                        match_keyword("in");                        
-                        ass.addChild(expr());                        
-                        match(Token.RANGE);
+                    Node assignment = new AssignmentNode();                    
+                    Node id = new IdNode(currentToken);
+                    assignment.addChild(id);
 
-                        Node e = expr();
-                        lt.addChild(e);
-                        eq.addChild(e);
+                    lt.addChild(id);
+                    eq.addChild(id);
 
-                        match_keyword("do");
-                        assertion.addChild(add);
-                        control.addChild(ass);
-                        control.addChild(assertion);                        
-                        forLoop.addChild(control);
-                        statement.addChild(forLoop);
+                    match(Token.ID);                        
+                    match_keyword("in");                        
+                    assignment.addChild(expr());                        
+                    match(Token.RANGE);
+
+                    Node e = expr();
+                    lt.addChild(e);
+                    eq.addChild(e);
+
+                    match_keyword("do");
+                    assertion.addChild(add);
+                    control.addChild(assignment);
+                    control.addChild(assertion);                        
+                    forLoop.addChild(control);
+                    statement.addChild(forLoop);
 
 
-                        // Build statements
-                        Node stmts = new Node("stmts");
-                        
-                        while (!accept_keyword("end")) {
-                            stmts.addChild(stmt());
-                        }
-                        forLoop.addChild(stmts);
-                        
-                        match_keyword("end");                        
-                        match_keyword("for");
-                        break;
-                    case "read":                        
-                        Node read = new ReadNode();
-                        statement.addChild(read);
-                        match_keyword("read");
-                        read.addChild(new IdNode(currentToken));
-                        match(Token.ID);
-                        break;
-                    case "print":
-                        Node print = new PrintNode();
-                        statement.addChild(print);
-                        match_keyword("print");
-                        print.addChild(expr());
-                        break;
-                    case "assert":                        
-                        Node assert = new AssertNode();                        
-                        match_keyword("assert"); 
-                        match(Token.LPAR);                        
-                        assert.addChild(expr());                        
-                        match(Token.RPAR);
-                        statement.addChild(assert);                        
-                        break;
-                    case "var":
-                        // variable declaration                        
-                        Node declaration = new DeclarationNode();
-                        match_keyword("var");
-                        Node id = new IdNode(currentToken);
-                        declaration.addChild(id);
-                        match(Token.ID);                        
-                        match(Token.COL);
-                        declaration.addChild(new Node(currentToken));
-
-                        statement.addChild(declaration);
-                        
-                        if (accept_keyword("int")) {
-                            match_keyword("int");
-                        }
-                        else if (accept_keyword("string")) {
-                            match_keyword("string");
-                        }
-                        else if (accept_keyword("bool")) {
-                            match_keyword("bool");
-                        }
-
-                        else new SyntaxError(currentToken, "Syntax Error: Expected int, string or bool, got " + currentToken.value);
-                        
-                        if (accept(Token.ASS)) {
-                            Node assignment = new AssignmentNode();
-                            assignment.addChild(id);
-                            match(Token.ASS);
-                            assignment.addChild(expr());          
-                            statement.addChild(assignment);
-                        }                        
-                        break;
-                    default:
-                        new SyntaxError(currentToken, "Syntax Error: Expected keyword var, for, read, print or assert, got " + currentToken.value);                        
-                        break;
+                    // Add statements
+                    Node stmts = new Node("stmts");
+                    
+                    while (!accept_keyword("end")) {
+                        stmts.addChild(stmt());
+                    }
+                    forLoop.addChild(stmts);
+                    
+                    match_keyword("end");                        
+                    match_keyword("for");
                 }
-            }
+                else if (currentToken.value == "read") {
+                    Node read = new ReadNode();
+                    statement.addChild(read);
+                    match_keyword("read");
+                    read.addChild(new IdNode(currentToken));
+                    match(Token.ID);
+                }
+                else if (currentToken.value == "print") {
+                    Node print = new PrintNode();
+                    statement.addChild(print);
+                    match_keyword("print");
+                    print.addChild(expr());
+                }
+                else if (currentToken.value == "assert") {
+                    Node assert = new AssertNode();                        
+                    match_keyword("assert"); 
+                    match(Token.LPAR);                        
+                    assert.addChild(expr());                        
+                    match(Token.RPAR);
+                    statement.addChild(assert);                        
+                }
+                else if (currentToken.value == "var") {
+                    // variable declaration                        
+                    Node declaration = new DeclarationNode();
+                    match_keyword("var");
+                    Node id = new IdNode(currentToken);
+                    declaration.addChild(id);
+                    match(Token.ID);                        
+                    match(Token.COL);
+                    
+                    if (accept_keyword("int")) {
+                        declaration.addChild(new Node(Token.INT));
+                        match_keyword("int");
+                    }
+                    else if (accept_keyword("string")) {
+                        declaration.addChild(new Node(Token.STRING));
+                        match_keyword("string");
+                    }
+                    else if (accept_keyword("bool")) {
+                        declaration.addChild(new Node(Token.BOOL));
+                        match_keyword("bool");
+                    }
+                    
+
+                    else new SyntaxError(currentToken, "Syntax Error: Expected int, string or bool, got " + currentToken.value);
+
+                    statement.addChild(declaration);
+                    
+                    if (accept(Token.ASS)) {
+                        Node assignment = new AssignmentNode();
+                        assignment.addChild(id);
+                        match(Token.ASS);
+                        assignment.addChild(expr());          
+                        statement.addChild(assignment);
+                    }                        
+                } 
+                else {
+                    new SyntaxError(currentToken, "Syntax Error: Expected keyword var, for, read, print or assert, got " + currentToken.value);                        
+                }
+            }            
             if (currentToken.type == Token.ID) {
                 // assignment
                 // statement.addChild(new IdNode(currentToken));
@@ -223,9 +226,14 @@ namespace MiniPL {
                     match(Token.ID);
                     break;
                 case "lpar":                    
-                    nextToken();                    
+                    nextToken();
                     node = expr();                     
                     match(Token.RPAR);
+                    break;
+                case "negation":                                        
+                    node = new UnOpNode(currentToken);                 
+                    match(Token.NEG);
+                    node.addChild(factor());                    
                     break;
                 default:                    
                     new SyntaxError(currentToken, "Syntax Error: Expected integer, string, bool, identifier or (, got " + currentToken.value);
@@ -246,7 +254,7 @@ namespace MiniPL {
                 node.addChild(left);
                 node.addChild(factor());
                 left = node;
-            }
+            }            
 
             return left;  
         }
@@ -263,8 +271,8 @@ namespace MiniPL {
                     nextToken();
                     node.addChild(left);
                     node.addChild(term());
-                    left = node;                                   
-            }
+                    left = node;
+            }    
 
             return left;  
         }

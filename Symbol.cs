@@ -21,8 +21,8 @@ namespace MiniPL {
 
 		public SymbolTable() { }
 
-        public void declare(string name) {
-            symbols.Add(new Symbol(name, Token.INT));
+        public void declare(string name, string type) {            
+            symbols.Add(new Symbol(name, type));
         }
 
         public void assign(string name, string value) {            

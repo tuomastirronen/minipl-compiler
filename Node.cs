@@ -190,7 +190,7 @@ namespace MiniPL {
         }
 
         public override int interpret() {
-            symbolTable.declare(getLeft().value);        
+            symbolTable.declare(getLeft().value, getRight().value);        
             return 1;
         }
     }
@@ -273,10 +273,34 @@ namespace MiniPL {
                         return 1;
                     }
                     else return 0;
+                case "&":
+                    return this.getLeft().interpret() & this.getRight().interpret();
                 default:
                     break;
             }
             return 0;
         }
+    }
+
+    // Unary operation
+    // Binary operation
+    public class UnOpNode : Node {
+        public UnOpNode(Token token) {
+            this.value = token.value;
+            generateId();
+        }
+        public override int interpret() {            
+            switch (this.value)
+            {
+                case "!":                    
+                    if (this.getLeft().interpret() > 0) {
+                        return 0;
+                    }
+                    else return 1;                    
+                default:
+                    break;
+            }
+            return 0;
+        } 
     }
 }

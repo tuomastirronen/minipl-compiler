@@ -116,17 +116,18 @@ namespace MiniPL {
         }
 
         public override int interpret() {            
-            Node control = getLeft();
+            Node controlNode = getLeft();
             
-            // Control variable assignment            
-            int counter = control.getLeft().interpret();
+            // Control variable initial assignment
+            int control = controlNode.getLeft().interpret();
             
-            while (control.getRight().interpret() != 0) {                
-                counter++;
-                symbolTable.assign(control.getLeft().getLeft().value, counter.ToString());
-                // Interpret
+            do {                                            
+                // Interpret                
                 getRight().interpret();
-            }            
+                control++;
+                symbolTable.assign(controlNode.getLeft().getLeft().value, control.ToString());
+                                
+            } while (controlNode.getRight().interpret() != 0);
             return 1;
         }
     }
@@ -151,7 +152,7 @@ namespace MiniPL {
                 // Assertion true
                 return 1;
             }
-            // Assertion false
+            // Assertion false            
             return 0;
         }
     }

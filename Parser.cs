@@ -85,25 +85,41 @@ namespace MiniPL {
                         // statement.addChild(new Node(currentToken));
                         match_keyword("for");
                         Node control = new ControlNode();
-                        Node operation = new BinOpNode("<");
+
+                        // Build assertion
+                        Node lt = new BinOpNode("<");
+                        Node eq = new BinOpNode("=");                        
+                        Node add = new BinOpNode("+");
+
+                        add.addChild(lt);
+                        add.addChild(eq);
+
                         Node assertion = new AssertNode();
                         Node ass = new AssignmentNode();                    
                         Node identifier = new IdNode(currentToken);
                         ass.addChild(identifier);
-                        operation.addChild(identifier);
+
+                        lt.addChild(identifier);
+                        eq.addChild(identifier);
 
                         match(Token.ID);                        
                         match_keyword("in");                        
                         ass.addChild(expr());                        
                         match(Token.RANGE);
-                        operation.addChild(expr());                   
+
+                        Node e = expr();
+                        lt.addChild(e);
+                        eq.addChild(e);
+
                         match_keyword("do");
-                        assertion.addChild(operation);
+                        assertion.addChild(add);
                         control.addChild(ass);
                         control.addChild(assertion);                        
                         forLoop.addChild(control);
                         statement.addChild(forLoop);
 
+
+                        // Build statements
                         Node stmts = new Node("stmts");
                         
                         while (!accept_keyword("end")) {

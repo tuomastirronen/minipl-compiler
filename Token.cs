@@ -30,7 +30,7 @@ namespace MiniPL {
         public string[] KEYWORDS = new []{"var", "for", "end", "in", "do", "read", "print", "int", "string", "bool", "assert"};
         
         public string type;
-		public string value;
+        public string value;
         public int col;
         public int row;
 

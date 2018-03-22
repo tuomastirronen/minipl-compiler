@@ -85,37 +85,25 @@ namespace MiniPL {
                     // Control node
                     Node control = new ControlNode();
 
-                    // Build assertion
-                    Node assertion = new AssertNode();
-
-                    // Construct <= by adding LT and EQ
-                    Node lt = new BinOpNode("<");
-                    Node eq = new BinOpNode("=");                        
-                    Node add = new BinOpNode("+");
-
-                    add.addChild(lt);
-                    add.addChild(eq);                    
+                    // Condition
+                    Node condition = new ForConditionNode();             
 
                     Node assignment = new AssignmentNode();                    
                     Node id = new IdNode(currentToken);
                     assignment.addChild(id);
 
-                    lt.addChild(id);
-                    eq.addChild(id);
+                    condition.addChild(id);
 
                     match(Token.ID);                        
                     match_keyword("in");                        
                     assignment.addChild(expr());                        
                     match(Token.RANGE);
+                    
+                    condition.addChild(expr());                    
 
-                    Node e = expr();
-                    lt.addChild(e);
-                    eq.addChild(e);
-
-                    match_keyword("do");
-                    assertion.addChild(add);
+                    match_keyword("do");                    
                     control.addChild(assignment);
-                    control.addChild(assertion);                        
+                    control.addChild(condition);                        
                     forLoop.addChild(control);
                     statement.addChild(forLoop);
 

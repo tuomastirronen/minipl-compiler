@@ -119,15 +119,16 @@ namespace MiniPL {
             Node controlNode = getLeft();
             
             // Control variable initial assignment
+                        
             int control = controlNode.getLeft().interpret();
-            
-            do {                                            
-                // Interpret                
+            int times = controlNode.getRight().getRight().interpret();
+
+            for (int i = control; i <= times; i++)
+            {
+                symbolTable.assign(controlNode.getLeft().getLeft().value, i.ToString());
                 getRight().interpret();
-                control++;
-                symbolTable.assign(controlNode.getLeft().getLeft().value, control.ToString());
-                                
-            } while (controlNode.getRight().interpret() != 0);
+            }
+
             return 1;
         }
     }
@@ -142,6 +143,13 @@ namespace MiniPL {
         }
     }
 
+    // Condition
+    public class ForConditionNode : Node {
+        public ForConditionNode() {                  
+            generateId();
+        }        
+    }
+
     // Assert
     public class AssertNode : Node {
         public AssertNode() {                  
@@ -149,10 +157,10 @@ namespace MiniPL {
         }        
         public override int interpret() {
             if (getLeft().interpret() != 0) {
-                // Assertion true
+                Console.WriteLine("Assertion succeeded");
                 return 1;
             }
-            // Assertion false            
+            Console.WriteLine("Assertion failed");
             return 0;
         }
     }
@@ -283,7 +291,6 @@ namespace MiniPL {
     }
 
     // Unary operation
-    // Binary operation
     public class UnOpNode : Node {
         public UnOpNode(Token token) {
             this.value = token.value;

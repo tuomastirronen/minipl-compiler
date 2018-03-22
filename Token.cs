@@ -23,9 +23,9 @@ namespace MiniPL {
         public static string RANGE = "range";
         public static string INT = "integer";
         public static string STRING = "string";
-        public static string BOOL = "boolean";
+        public static string BOOL = "boolean";        
         public static string EOF = "eof";
-        public static string UNKNOWN = "unknown";
+        public static string UNKNOWN = "unknown";        
         
         public string[] KEYWORDS = new []{"var", "for", "end", "in", "do", "read", "print", "int", "string", "bool", "assert"};
         

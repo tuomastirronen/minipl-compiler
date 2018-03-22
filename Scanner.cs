@@ -23,7 +23,7 @@ namespace MiniPL {
         }
         private char next(int steps = 1) {
             cursor += (steps);
-            col++;    
+            col++;            
             return source.content[cursor - 1];
         }
         private char lookAhead(int steps = 0) {            
@@ -74,23 +74,26 @@ namespace MiniPL {
             }
 
             // operation
-            else if (Array.IndexOf(new []{'+', '-', '*', '/', '<', '=', '&', '!'}, c) > -1) {
-                
-                // comments
-                if (c == '/' && lookAhead() == '*') {
-                    next();
+            else if (Array.IndexOf(new []{'+', '-', '*', '/', '<', '=', '&', '!'}, c) > -1) {                
+                // comments                
+                if (c == '/' && lookAhead() == '*') {                        
+                    c = next();
                     while (true) {
-                        next();               
-                        if (lookAhead() == '*' && lookAhead(1) == '/') {
+                        c = next();               
+                        if (lookAhead() == '*' && lookAhead(1) == '/') {                            
                             break;
                         }
                     }                    
-                    next(2);
+                    c = next(3);
+                    return nextToken();
                 }
-                else if (c == '/' && lookAhead() == '/') {                    
-                    while (lookAhead() != '\n') {
-                        next();
-                    }                    
+                else if (c == '/' && lookAhead() == '/') {                                        
+                    next();
+                    while (!lookAhead().Equals('\n')) {                        
+                        c = next();                        
+                    }
+                    c = next();                    
+                    return nextToken();
                 }
                 else {
                     switch (c)

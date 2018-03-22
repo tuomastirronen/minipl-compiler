@@ -74,7 +74,7 @@ namespace MiniPL {
         }
 
         private Node stmt() {
-            Node statement = new StatementNode();
+            Node statement = new StatementNode();            
 
             if (currentToken.type == Token.KW) {
                 if (currentToken.value == "for") {
@@ -178,10 +178,10 @@ namespace MiniPL {
                 else {
                     new SyntaxError(currentToken, "Syntax Error: Expected keyword var, for, read, print or assert, got " + currentToken.value);                        
                 }
+                match(Token.SCOL);
             }            
-            if (currentToken.type == Token.ID) {
-                // assignment
-                // statement.addChild(new IdNode(currentToken));
+            else if (currentToken.type == Token.ID) {
+                // assignment                
                 Node id = new IdNode(currentToken);
                 match(Token.ID);
                 Node assignment = new AssignmentNode();
@@ -189,9 +189,9 @@ namespace MiniPL {
                 match(Token.ASS);                        
                 assignment.addChild(expr());
                 statement.addChild(assignment);
+                match(Token.SCOL);
             }
 
-            match(Token.SCOL);
             return statement;
         }
 

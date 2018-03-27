@@ -17,15 +17,16 @@ namespace MiniPL {
 
 	public class SymbolTable {
 
-        public List<Symbol> symbols = new List<Symbol>();
+        public static List<Symbol> symbols = new List<Symbol>();
 
 		public SymbolTable() { }
 
-        public void declare(string name, string type) {            
+        public static void declare(string name, string type) {            
             symbols.Add(new Symbol(name, type));
         }
 
-        public void assign(string name, string value) {            
+        public static void assign(string name, string value) {
+            // Console.WriteLine(">>> Assign " + name + " = " + value);
             bool found = false;
             foreach (var symbol in symbols) {
                 if(symbol.name.Equals(name))
@@ -37,8 +38,33 @@ namespace MiniPL {
             }            
         }
 
-        public int lookup(string name) {
-            bool found = false;
+        public static string lookupType(string name) {
+            bool found = false;            
+            foreach (var symbol in symbols) {
+                if(symbol.name.Equals(name))
+                    return symbol.type;
+            }
+            if (!found) {
+                new SemanticError("Semantic Error: " + name + " does not exist in this context.");
+            }
+            return null;
+        }
+
+        public static string lookup(string name) {
+            // Console.WriteLine(">>> Lookup " + name);
+            bool found = false;            
+            foreach (var symbol in symbols) {
+                if(symbol.name.Equals(name))                    
+                    return symbol.value;
+            }
+            if (!found) {
+                new SemanticError("Semantic Error: " + name + " does not exist in this context.");
+            }
+            return null;
+        }
+
+        public static int lookupInt(string name) {            
+            bool found = false;            
             foreach (var symbol in symbols) {
                 if(symbol.name.Equals(name))                    
                     return Int32.Parse(symbol.value);
@@ -47,6 +73,18 @@ namespace MiniPL {
                 new SemanticError("Semantic Error: " + name + " does not exist in this context.");
             }
             return -1;
-        }    
+        }
+
+        public static string lookupString(string name) {            
+            bool found = false;            
+            foreach (var symbol in symbols) {
+                if(symbol.name.Equals(name))                    
+                    return symbol.value;
+            }
+            if (!found) {
+                new SemanticError("Semantic Error: " + name + " does not exist in this context.");
+            }
+            return null;
+        }
 	}    
 }

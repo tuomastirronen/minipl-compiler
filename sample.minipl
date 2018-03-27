@@ -1,6 +1,1 @@
-var nTimes : int := 10;
-var x : int;
-for x in 0..nTimes do
-  print x;  
-end for;
-assert (x = nTimes);
+assert (!(1 & 1));

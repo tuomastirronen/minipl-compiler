@@ -1,0 +1,14 @@
+error handling
+    - recovering from errors
+
+semantic analysis
+
+interpretation
+    - move functionality to a dedicated class
+    - printing
+
+documentation
+    1. The Mini-PL token patterns as regular expressions or, alternatively, as regular definitions.
+    2. A modified context-free grammar suitable for recursive-descent parsing (eliminating any LL (1) violations); modifications must not affect the language that is accepted.
+    3. Specify abstract syntax trees (AST), i.e., the internal representation for Mini-PL programs; you can use UML diagrams or alternatively give a syntax-based definition of the abstract syntax.
+    4. Error handling approach and solutions used in your Mini-PL implementation (in its scanner, parser, semantic analyzer, and interpreter).

@@ -5,23 +5,16 @@ using System.Collections.Generic;
 
 namespace MiniPL {
 
-    public class Node {
+    public abstract class Node {
         
         public Token token;
         public int id;
         public string value;
+        public string type;
         public List<Node> children = new List<Node>();
         public static SymbolTable symbolTable = new SymbolTable();
         static int count = 0; // for mermaid
-
-        public virtual int interpret() {
-            foreach (Node child in children)
-            {
-                child.interpret();
-            }
-            return 1;
-        }
-    
+        
         public Node() { }
 
         public Node(string value) {
@@ -47,6 +40,23 @@ namespace MiniPL {
             return children[1];
         }
 
+        public abstract R accept<R>(IVisitor<R> visitor);
+
+        public bool hasStringChild() {            
+            foreach (Node child in children) {                
+                if (child is StrNode) {
+                    return true;
+                }
+                else if (child is IdNode) {
+                    if (SymbolTable.lookupType(child.value) == Token.STRING) {
+                        return true;
+                    }                    
+                }                
+            }
+            return false;
+
+        }
+
         protected void generateId() {
             count++;
             this.id = count;
@@ -64,7 +74,7 @@ namespace MiniPL {
                 indent += "| ";
             }
 
-            Console.WriteLine(this + ", INTERPRET: " + this.interpret());
+            Console.WriteLine(this + ", INTERPRET: ");
 
             for (int i = 0; i < children.Count; i++)
                 children[i].print(indent, i == children.Count - 1);
@@ -74,8 +84,7 @@ namespace MiniPL {
 
             Console.Write(indent);
             if (!first) {
-                Console.Write("-->");
-                
+                Console.Write("-->");                
             }
             else {
                 Console.WriteLine("graph TD");
@@ -98,8 +107,23 @@ namespace MiniPL {
     public class ProgramNode : Node {
         public ProgramNode() {            
             generateId();
-        }        
+        }      
 
+        public override R accept<R>(IVisitor<R> visitor) {
+            return visitor.visit(this);            
+        }  
+
+    }
+    
+    // Statement
+    public class StatementsNode : Node {
+        public StatementsNode() {            
+            generateId();
+        }
+
+        public override R accept<R>(IVisitor<R> visitor) {
+            return visitor.visit(this);            
+        }
     }
 
     // Statement
@@ -107,29 +131,20 @@ namespace MiniPL {
         public StatementNode() {            
             generateId();
         }
+
+        public override R accept<R>(IVisitor<R> visitor) {
+            return visitor.visit(this);            
+        }
     }
 
     // For Loop
     public class ForLoopNode : Node {
         public ForLoopNode() {            
             generateId();
-        }
+        }      
 
-        public override int interpret() {            
-            Node controlNode = getLeft();
-            
-            // Control variable initial assignment
-                        
-            int control = controlNode.getLeft().interpret();
-            int times = controlNode.getRight().getRight().interpret();
-
-            for (int i = control; i <= times; i++)
-            {
-                symbolTable.assign(controlNode.getLeft().getLeft().value, i.ToString());
-                getRight().interpret();
-            }
-
-            return 1;
+        public override R accept<R>(IVisitor<R> visitor) {
+            return visitor.visit(this);
         }
     }
 
@@ -137,9 +152,11 @@ namespace MiniPL {
     public class ControlNode : Node {
         public ControlNode() {                  
             generateId();
-        }        
-        public override int interpret() {
-            return 0;
+        }
+
+        public override R accept<R>(IVisitor<R> visitor) {
+            // return visitor.visit(this);
+            return default(R);
         }
     }
 
@@ -147,22 +164,23 @@ namespace MiniPL {
     public class ForConditionNode : Node {
         public ForConditionNode() {                  
             generateId();
-        }        
+        }   
+
+        public override R accept<R>(IVisitor<R> visitor) {
+            // return visitor.visit(this);
+            return default(R);
+        }     
     }
 
     // Assert
     public class AssertNode : Node {
         public AssertNode() {                  
             generateId();
-        }        
-        public override int interpret() {
-            if (getLeft().interpret() != 0) {
-                Console.WriteLine("Assertion succeeded");
-                return 1;
-            }
-            Console.WriteLine("Assertion failed");
-            return 0;
-        }
+        }   
+
+        public override R accept<R>(IVisitor<R> visitor) {
+            return visitor.visit(this);            
+        }     
     }
 
 
@@ -171,10 +189,9 @@ namespace MiniPL {
         public PrintNode() {            
             generateId();
         }
-        public override int interpret() {
-            // System call
-            Console.WriteLine(this.getLeft().interpret());
-            return 1;
+
+        public override R accept<R>(IVisitor<R> visitor) {
+            return visitor.visit(this);            
         }
     }    
     
@@ -183,12 +200,11 @@ namespace MiniPL {
         public ReadNode() {            
             generateId();
         }
-        public override int interpret() {            
-            Console.Write(">>> ");
-            int value = Convert.ToInt32(Console.ReadLine());
-            symbolTable.assign(getLeft().value, value.ToString());
-            return value;
+
+        public override R accept<R>(IVisitor<R> visitor) {
+            return visitor.visit(this);
         }
+
     }
 
     // Declaration
@@ -197,10 +213,10 @@ namespace MiniPL {
             generateId();
         }
 
-        public override int interpret() {
-            symbolTable.declare(getLeft().value, getRight().value);        
-            return 1;
+        public override R accept<R>(IVisitor<R> visitor) {
+            return visitor.visit(this);        
         }
+
     }
 
     // Assignment
@@ -208,43 +224,12 @@ namespace MiniPL {
         public AssignmentNode() {            
             generateId();
         }
-
-        public override int interpret() {
-            symbolTable.assign(getLeft().value, getRight().interpret().ToString());            
-            return getRight().interpret();
+        public override R accept<R>(IVisitor<R> visitor) {
+            return visitor.visit(this);            
         }
+
     }
 
-    // Integer
-    public class IntNode : Node {
-        public IntNode(Token token) {
-            this.value = token.value;            
-            generateId();
-        }        
-        public override int interpret() {
-            return Int32.Parse(this.value);
-        }
-    }
-
-    // String
-    public class StrNode : Node {
-        public StrNode(Token token) {
-            this.value = token.value;            
-            generateId();
-        }
-    }
-
-    // Identifier
-    public class IdNode : Node {
-        public IdNode(Token token) {
-            this.value = token.value;            
-            generateId();
-        }
-
-        public override int interpret() {            
-            return symbolTable.lookup(this.value);
-        }
-    }
 
     // Operations
 
@@ -260,34 +245,10 @@ namespace MiniPL {
             generateId();
         }
 
-        public override int interpret() {
-            switch (this.value)
-            {
-                case "*":
-                    return this.getLeft().interpret() * this.getRight().interpret();
-                case "/":
-                    return this.getLeft().interpret() / this.getRight().interpret();
-                case "+":
-                    return this.getLeft().interpret() + this.getRight().interpret();
-                case "-":
-                    return this.getLeft().interpret() - this.getRight().interpret();
-                case "=":
-                    if (this.getLeft().interpret() == this.getRight().interpret()) {
-                        return 1;
-                    }
-                    else return 0;
-                case "<":                    
-                    if (this.getLeft().interpret() < this.getRight().interpret()) {
-                        return 1;
-                    }
-                    else return 0;
-                case "&":
-                    return this.getLeft().interpret() & this.getRight().interpret();
-                default:
-                    break;
-            }
-            return 0;
+        public override R accept<R>(IVisitor<R> visitor) {
+            return visitor.visit(this);
         }
+
     }
 
     // Unary operation
@@ -296,18 +257,61 @@ namespace MiniPL {
             this.value = token.value;
             generateId();
         }
-        public override int interpret() {            
-            switch (this.value)
-            {
-                case "!":                    
-                    if (this.getLeft().interpret() > 0) {
-                        return 0;
-                    }
-                    else return 1;                    
-                default:
-                    break;
-            }
-            return 0;
-        } 
+        public override R accept<R>(IVisitor<R> visitor) {
+            // return visitor.visit(this);
+            return default(R);
+        }
+
     }
+
+    // Terminals
+    // Integer
+    public class IntNode : Node {
+        public IntNode(Token token) {
+            this.value = token.value;
+            this.type = token.type;
+            generateId();
+        }
+        public override R accept<R>(IVisitor<R> visitor) {
+            return visitor.visit(this);
+        }
+ 
+    }
+
+    // String
+    public class StrNode : Node {
+        public StrNode(Token token) {
+            this.value = token.value;
+            this.type = token.type;
+            generateId();
+        }
+        public override R accept<R>(IVisitor<R> visitor) {
+            return visitor.visit(this);
+        }
+    }
+
+    public class BoolNode : Node {
+        public BoolNode(Token token) {
+            this.value = token.value;
+            this.type = token.type;
+            generateId();
+        }
+        public override R accept<R>(IVisitor<R> visitor) {
+            return visitor.visit(this);
+        }
+    }
+
+    // Identifier
+    public class IdNode : Node {        
+        public IdNode(Token token) {
+            this.value = token.value;
+            this.type = token.type;          
+            generateId();
+        }
+        public override R accept<R>(IVisitor<R> visitor) {
+            return visitor.visit(this);
+        }
+
+    }
+    
 }

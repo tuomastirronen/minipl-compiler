@@ -49,14 +49,14 @@ namespace MiniPL {
             }                
         }
 
-        public Node parse() {            
+        public ProgramNode parse() {            
             return prog();
         }
 
-        private Node prog() {
+        private ProgramNode prog() {
             nextToken();
 
-            Node program = new ProgramNode();
+            ProgramNode program = new ProgramNode();
 
             program.addChild(stmts());
 
@@ -64,7 +64,7 @@ namespace MiniPL {
         }
 
         private Node stmts() {
-            Node stmts = new Node("stmts");
+            Node stmts = new StatementsNode();
 
             while (scanner.hasNext()){                
                 stmts.addChild(stmt());
@@ -109,7 +109,7 @@ namespace MiniPL {
 
 
                     // Add statements
-                    Node stmts = new Node("stmts");
+                    Node stmts = new StatementsNode();
                     
                     while (!accept_keyword("end")) {
                         stmts.addChild(stmt());
@@ -150,15 +150,15 @@ namespace MiniPL {
                     match(Token.COL);
                     
                     if (accept_keyword("int")) {
-                        declaration.addChild(new Node(Token.INT));
+                        // declaration.addChild(new IntNode(Token.INT));
                         match_keyword("int");
                     }
                     else if (accept_keyword("string")) {
-                        declaration.addChild(new Node(Token.STRING));
+                        // declaration.addChild(new StrNode(Token.STRING));
                         match_keyword("string");
                     }
                     else if (accept_keyword("bool")) {
-                        declaration.addChild(new Node(Token.BOOL));
+                        // declaration.addChild(new BoolNode(Token.BOOL));
                         match_keyword("bool");
                     }
                     
@@ -197,7 +197,7 @@ namespace MiniPL {
 
         private Node factor() {
             // factor : INTEGER | LPAREN expr RPAREN            
-            Node node = new Node();
+            Node node = null;
 
             switch (currentToken.type)
             {                
@@ -255,7 +255,7 @@ namespace MiniPL {
             Node left = term();
 
             while (currentToken.type == Token.ADD | currentToken.type == Token.SUB) {                
-                    Node node = new BinOpNode(currentToken);
+                    Node node = new BinOpNode(currentToken);                    
                     nextToken();
                     node.addChild(left);
                     node.addChild(term());

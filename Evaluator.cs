@@ -8,7 +8,7 @@ namespace MiniPL {
         }
         object IVisitor<object>.visit(ProgramNode node) { return 1; }
 
-        object IVisitor<object>.visit(StatementsNode node) { return 1; }
+        object IVisitor<object>.visit(BlockNode node) { return 1; }
 
         object IVisitor<object>.visit(StatementNode node) { return 1; }
 
@@ -37,7 +37,7 @@ namespace MiniPL {
             switch (node.value)
             {
                 case "!":                    
-                    if (Convert.ToInt32(evaluate(node.getLeft())) > 0) {
+                    if (Convert.ToBoolean(evaluate(node.getLeft()))) {
                         return 0;
                     }
                     else return 1;                    
@@ -50,12 +50,12 @@ namespace MiniPL {
         object IVisitor<object>.visit(BinOpNode node) {
             object left = evaluate(node.getLeft());
             object right = evaluate(node.getRight());
-            
+                        
             switch (node.value)
             {
                 case "+":
                     // concatenation
-                    if (left is string || right is string) {
+                    if (node.getLeft().type.Equals(Token.STRING) & node.getRight().type.Equals(Token.STRING)) {
                         return left.ToString() + right.ToString();
                     }
                     else {
@@ -69,9 +69,20 @@ namespace MiniPL {
                 case "/":
                     return Convert.ToInt32(left) / Convert.ToInt32(right);
                 case "=":
-                    return Convert.ToInt32(left) == Convert.ToInt32(right);
-                case "<":                    
-                    return Convert.ToInt32(left) < Convert.ToInt32(right);
+                    if (node.getLeft().type.Equals(Token.STRING) & node.getRight().type.Equals(Token.STRING)) {
+                        return left.ToString().Equals(right.ToString());
+                    }
+                    else {
+                        return Convert.ToInt32(left) == Convert.ToInt32(right);
+                    }                    
+                case "<":
+                    if (node.getLeft().type.Equals(Token.STRING) & node.getRight().type.Equals(Token.STRING)) {
+                        return left.ToString().Length < right.ToString().Length;
+                    }
+                    else {
+                        return Convert.ToInt32(left) < Convert.ToInt32(right); 
+                    }         
+                    
                 case "&":
                     return Convert.ToBoolean(left) & Convert.ToBoolean(right);
                 default:
@@ -92,7 +103,7 @@ namespace MiniPL {
         }
 
         object IVisitor<object>.visit(IdNode node) {            
-            return Convert.ToInt32(SymbolTable.lookup(node.value));
+            return SymbolTable.lookup(node.value);
         }    
     }
 }

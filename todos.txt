@@ -1,11 +1,9 @@
 error handling
     - recovering from errors
 
-semantic analysis
+print newline
 
-boolean
-
-comments
+comment code
 
 documentation
     1. The Mini-PL token patterns as regular expressions or, alternatively, as regular definitions.

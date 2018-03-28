@@ -19,7 +19,7 @@ namespace MiniPL {
             return null;
         }
 
-        object IVisitor<object>.visit(StatementsNode node) {            
+        object IVisitor<object>.visit(BlockNode node) {            
             foreach (var child in node.children) {
                 child.accept(this);
             }            
@@ -34,7 +34,7 @@ namespace MiniPL {
         }
 
         object IVisitor<object>.visit(DeclarationNode node) {
-            // Declarations are done during semantic analysis           
+            // Declarations are done during semantic analysis    
             return null;
         }
 
@@ -45,8 +45,7 @@ namespace MiniPL {
 
         object IVisitor<object>.visit(ForLoopNode node) {
             Node controlNode = node.getLeft();
-            
-            Console.WriteLine(controlNode.getRight().getRight().accept(new Evaluator()));
+                        
             // Control variable initial assignment                        
             int control = Convert.ToInt32(controlNode.getLeft().accept(new Evaluator()));
             int times = Convert.ToInt32(controlNode.getRight().getRight().accept(new Evaluator()));
@@ -65,7 +64,7 @@ namespace MiniPL {
 
         object IVisitor<object>.visit(PrintNode node) {
             Node child = node.getLeft();
-            Console.WriteLine(child.accept(new Evaluator()));
+            Console.Write(child.accept(new Evaluator()));
             return null;
         }
 

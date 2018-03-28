@@ -17,8 +17,7 @@ namespace MiniPL {
             }            
             else {
                 currentToken = new Token(Token.EOF, null);
-            }
-            // Console.WriteLine("token: " + currentToken);
+            }            
         }
 
         private bool accept(string type) {            
@@ -30,17 +29,23 @@ namespace MiniPL {
         }
 
         private void match(string type) {
-            // Console.WriteLine("\t-> match " + type);
-            if (currentToken.type == type) {
+            try
+            {
+                if (currentToken.type == type) {
                 nextToken();
-            }                
-            else {                
-                new SyntaxError(currentToken, "Syntax Error: Expected " + type + ", got " + currentToken.type + " '" + currentToken.value + "'");
-            }                
+                }                
+                else {                
+                    new SyntaxError(currentToken, "Syntax Error: Expected " + type + ", got " + currentToken.type + " '" + currentToken.value + "'");
+                }  
+            }
+            catch (System.Exception) // There has been a lexical error
+            {
+                nextToken();
+            }  
+                          
         }
         
-        private void match_keyword(string value) {
-            // Console.WriteLine("\t-> match keyword " + value);       
+        private void match_keyword(string value) {                
             if (currentToken.value == value) {
                 nextToken();
             }                
@@ -64,7 +69,7 @@ namespace MiniPL {
         }
 
         private Node stmts() {
-            Node stmts = new StatementsNode();
+            Node stmts = new BlockNode();
 
             while (scanner.hasNext()){                
                 stmts.addChild(stmt());
@@ -109,7 +114,7 @@ namespace MiniPL {
 
 
                     // Add statements
-                    Node stmts = new StatementsNode();
+                    Node stmts = new BlockNode();
                     
                     while (!accept_keyword("end")) {
                         stmts.addChild(stmt());
@@ -150,18 +155,15 @@ namespace MiniPL {
                     match(Token.COL);
                     
                     if (accept_keyword("int")) {
-                        // declaration.addChild(new IntNode(Token.INT));
                         id.type = Token.INT;
                         match_keyword("int");
                     }
-                    else if (accept_keyword("string")) {
-                        // declaration.addChild(new StrNode(Token.STRING));
+                    else if (accept_keyword("string")) {                        
                         id.type = Token.STRING;
                         match_keyword("string");
                     }
-                    else if (accept_keyword("bool")) {
-                        declaration.type = Token.BOOL;
-                        // declaration.addChild(new BoolNode(Token.BOOL));
+                    else if (accept_keyword("bool")) {                        
+                        id.type = Token.BOOL;                        
                         match_keyword("bool");
                     }
                     
@@ -200,17 +202,21 @@ namespace MiniPL {
 
         private Node factor() {
             // factor : INTEGER | LPAREN expr RPAREN            
-            Node node = null;
-
+            Node node = null;            
             switch (currentToken.type)
             {                
                 case "integer":                    
                     node = new IntNode(currentToken);
-                    match(Token.INT);
+                    match(Token.INT);                    
                     break;
                 case "string":                    
                     node = new StrNode(currentToken);
                     match(Token.STRING);
+                    break;
+                case "boolean":                    
+                    node = new BoolNode(currentToken);
+                    match(Token.BOOL);
+                    Console.WriteLine("BOOLEAN");
                     break;
                 case "identifier":                    
                     node = new IdNode(currentToken);

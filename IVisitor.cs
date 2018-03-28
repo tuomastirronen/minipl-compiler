@@ -4,7 +4,7 @@ namespace MiniPL {
     public interface IVisitor<R> {
         
         R visit(ProgramNode node);
-        R visit(StatementsNode node);
+        R visit(BlockNode node);
         R visit(StatementNode node);
         R visit(DeclarationNode node);
         R visit(AssignmentNode node);

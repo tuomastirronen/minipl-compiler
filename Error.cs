@@ -14,10 +14,10 @@ namespace MiniPL {
         }
 
         public void handleError() {
-            // throw new System.Exception(this.msg);            
-            errors.Add(this);
-            Console.WriteLine(this);
-            Environment.Exit(0);
+            // throw new System.Exception(this.msg);              
+            errors.Add(this);            
+            // Console.WriteLine(this);
+            // Environment.Exit(0);
         }
 
         public static void printErrors() {
@@ -28,7 +28,7 @@ namespace MiniPL {
         }
 
         public override string ToString() {
-            return this.msg + " at (row: " + this.row + ", col: " + this.col + ").";
+            return "\t" + this.msg + " (at line " + this.row + ").";
         }
 
     }

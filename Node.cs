@@ -103,7 +103,7 @@ namespace MiniPL {
         }
 
         public override string ToString() {
-            return this.GetType().Name + "'" + this.value + "'";
+            return this.GetType().Name + "->" + this.value;
         }
     }
 
@@ -120,8 +120,8 @@ namespace MiniPL {
     }
     
     // Statement
-    public class StatementsNode : Node {
-        public StatementsNode() {            
+    public class BlockNode : Node {
+        public BlockNode() {            
             generateId();
         }
 
@@ -264,8 +264,7 @@ namespace MiniPL {
             generateId();
         }
         public override R accept<R>(IVisitor<R> visitor) {
-            // return visitor.visit(this);
-            return default(R);
+            return visitor.visit(this);
         }
 
     }

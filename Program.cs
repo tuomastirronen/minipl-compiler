@@ -7,20 +7,15 @@ namespace Compiler
     class Program
     {
         static void Main(string[] args) {                        
-            Parser p = new Parser(new Scanner(new Source(args[0])));                        
-            
-            // Lexical Errors
+            Parser p = new Parser(new Scanner(new Source(args[0])));
+            ProgramNode ast = p.parse();
+                        
+            // ast.mermaid("", true, true);
+            new SemanticAnalyzer(ast).analyze();    
+
+            // Interpret if no errors found
             if (Error.errors.Count == 0) {
-                ProgramNode ast = p.parse();
-                new SemanticAnalyzer(ast).analyze();                
-                
-                // Syntax Errors
-                if (Error.errors.Count == 0) {
-                    new Interpreter(ast).interpret();
-                }
-                else {
-                    Error.printErrors();
-                }
+                new Interpreter(ast).interpret();                    
             }
             else {
                 Error.printErrors();

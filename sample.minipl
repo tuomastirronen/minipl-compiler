@@ -1,2 +1,4 @@
 var x : int;
-x := "as";
+x := 2;
+x := x + x;
+print x + x;

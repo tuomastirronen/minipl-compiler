@@ -9,14 +9,32 @@ namespace MiniPL {
 		List<string[]> allowedOperations = new List<string[]>
 		{
 			new string[] { "+", Token.INT, Token.INT },			// Integer addition
-			new string[] { "+", Token.STRING, Token.INT }, 		// Concatenate string and integer
-			new string[] { "+", Token.INT, Token.STRING },		// Concatenate integer and string
-			new string[] { "+", Token.STRING, Token.STRING }, 	// Concatenate strings
 			new string[] { "-", Token.INT, Token.INT },			// Integer substraction
-			new string[] { "*", Token.INT, Token.INT },			// Integer multiplication
-			new string[] { "/", Token.INT, Token.INT }			// Integer division
+			new string[] { "*", Token.INT, Token.INT },			// Integer multipication
+			new string[] { "/", Token.INT, Token.INT },			// Integer division
+			
+			new string[] { "+", Token.STRING, Token.STRING }, 	// String concatenation
+
+			new string[] { "&", Token.BOOL, Token.BOOL }, 		// Logical and
+			new string[] { "!", Token.BOOL, null }, 			// Logical not
+
+			new string[] { "=", Token.INT, Token.INT }, 		// Equality comparison
+			new string[] { "<", Token.INT, Token.INT }, 		// Less-than concatenation			
+			new string[] { "=", Token.STRING, Token.STRING }, 	// Equality comparison
+			new string[] { "<", Token.STRING, Token.STRING }, 	// Less-than concatenation			
+			new string[] { "=", Token.BOOL, Token.BOOL }, 		// Equality comparison
+			new string[] { "<", Token.BOOL, Token.BOOL }, 		// Less-than concatenation			
 		};
 		
+		List<string[]> allowedAssignments = new List<string[]>
+		{
+			new string[] {Token.INT, Token.INT },
+			new string[] {Token.INT, Token.BOOL },
+			new string[] {Token.STRING, Token.STRING },
+			new string[] {Token.BOOL, Token.BOOL },
+			new string[] {Token.BOOL, Token.INT }
+		};
+
 		public SemanticAnalyzer(Node ast) {
 	        this.ast = ast;
 	    }
@@ -32,7 +50,7 @@ namespace MiniPL {
             return null;
         }
 
-        object IVisitor<object>.visit(StatementsNode node) {            
+        object IVisitor<object>.visit(BlockNode node) {            
             foreach (var child in node.children) {
                 child.accept(this);
             }            
@@ -104,7 +122,11 @@ namespace MiniPL {
 
         object IVisitor<object>.visit(ReadNode node) { return 1; }
 
-		object IVisitor<object>.visit(AssertNode node) { return null; }
+		object IVisitor<object>.visit(AssertNode node) {
+			Node child = node.getLeft();
+			child.accept(this);
+			return null;
+		}
 
         object IVisitor<object>.visit(BinOpNode node) {
 			Node left = node.getLeft();
@@ -130,7 +152,11 @@ namespace MiniPL {
 			
 		}
 
-        object IVisitor<object>.visit(UnOpNode node) { return null; }
+        object IVisitor<object>.visit(UnOpNode node) {
+			Node child = node.getLeft();
+			child.accept(this);			
+			return null;
+		}
         object IVisitor<object>.visit(IntNode node) {
 			node.type = Token.INT;
 			return node.type;
@@ -156,13 +182,19 @@ namespace MiniPL {
 				}				
 			}
 			if (!allowed) {
-				new SemanticError(operation, "Operation not allowed: " + left.type +  " " + operation.value + " " + right.type);				
+				new SemanticError(operation, "Semantic Error: Operation not allowed: " + left.type +  " " + operation.value + " " + right.type);				
 			}
 		}
 
-		public void checkSameType(Node left, Node right) {
-			if (!left.type.Equals(right.type)) {
-				new SemanticError(right, "Semantic Error: Expected " + left.type + ", got " + right.type);				
+		public void checkSameType(Node left, Node right) {			
+			bool allowed = false;
+			foreach (var rule in allowedAssignments) {
+				if (left.type.Equals(rule[0]) & right.type.Equals(rule[1])) {
+					allowed = true;
+				}				
+			}
+			if (!allowed) {
+				new SemanticError(right, "Semantic Error: Expected " + left.type + ", got " + right.type);			
 			}
 		}		
 	}    

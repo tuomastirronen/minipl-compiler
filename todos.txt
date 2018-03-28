@@ -3,9 +3,9 @@ error handling
 
 semantic analysis
 
-interpretation
-    - move functionality to a dedicated class
-    - printing
+boolean
+
+comments
 
 documentation
     1. The Mini-PL token patterns as regular expressions or, alternatively, as regular definitions.

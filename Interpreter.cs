@@ -2,7 +2,6 @@ using System;
 
 namespace MiniPL {
 	public class Interpreter : IVisitor<object> {
-
         Node ast;
 		
 		public Interpreter(Node node) {
@@ -35,7 +34,7 @@ namespace MiniPL {
         }
 
         object IVisitor<object>.visit(DeclarationNode node) {
-            SymbolTable.declare(node.getLeft().value, node.getLeft().type);               
+            // Declarations are done during semantic analysis           
             return null;
         }
 
@@ -47,6 +46,7 @@ namespace MiniPL {
         object IVisitor<object>.visit(ForLoopNode node) {
             Node controlNode = node.getLeft();
             
+            Console.WriteLine(controlNode.getRight().getRight().accept(new Evaluator()));
             // Control variable initial assignment                        
             int control = Convert.ToInt32(controlNode.getLeft().accept(new Evaluator()));
             int times = Convert.ToInt32(controlNode.getRight().getRight().accept(new Evaluator()));
@@ -59,6 +59,9 @@ namespace MiniPL {
 
             return null;
         }
+
+        object IVisitor<object>.visit(ControlNode node) { return null; }
+        object IVisitor<object>.visit(ForConditionNode node) { return null; }
 
         object IVisitor<object>.visit(PrintNode node) {
             Node child = node.getLeft();

@@ -16,6 +16,8 @@ namespace MiniPL {
         object IVisitor<object>.visit(AssignmentNode node) { return 1; }
 
         object IVisitor<object>.visit(ForLoopNode node) { return 1; }
+        object IVisitor<object>.visit(ControlNode node) { return 1; }
+        object IVisitor<object>.visit(ForConditionNode node) { return 1; }
         
         object IVisitor<object>.visit(PrintNode node) { return 1; }
 

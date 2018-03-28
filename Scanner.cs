@@ -15,7 +15,7 @@ namespace MiniPL {
         }
 
         private Token createToken(string type, string value) {
-            return new Token(type, value, row, col);
+            return new Token(type, value, row, col - value.Length);
         }
         
         public bool hasNext() {            

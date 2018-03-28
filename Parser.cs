@@ -151,13 +151,16 @@ namespace MiniPL {
                     
                     if (accept_keyword("int")) {
                         // declaration.addChild(new IntNode(Token.INT));
+                        id.type = Token.INT;
                         match_keyword("int");
                     }
                     else if (accept_keyword("string")) {
                         // declaration.addChild(new StrNode(Token.STRING));
+                        id.type = Token.STRING;
                         match_keyword("string");
                     }
                     else if (accept_keyword("bool")) {
+                        declaration.type = Token.BOOL;
                         // declaration.addChild(new BoolNode(Token.BOOL));
                         match_keyword("bool");
                     }

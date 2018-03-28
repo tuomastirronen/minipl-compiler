@@ -14,6 +14,8 @@ namespace MiniPL {
         public List<Node> children = new List<Node>();
         public static SymbolTable symbolTable = new SymbolTable();
         static int count = 0; // for mermaid
+        public int row;
+        public int col;
         
         public Node() { }
 
@@ -25,6 +27,8 @@ namespace MiniPL {
         public Node(Token token) {
             this.token = token;
             this.value = token.value;
+            this.row = token.row;
+            this.col = token.col;
             generateId();                 
         }       
 
@@ -99,7 +103,7 @@ namespace MiniPL {
         }
 
         public override string ToString() {
-            return this.GetType().Name + " -> " + this.value;
+            return this.GetType().Name + "'" + this.value + "'";
         }
     }
 
@@ -155,8 +159,7 @@ namespace MiniPL {
         }
 
         public override R accept<R>(IVisitor<R> visitor) {
-            // return visitor.visit(this);
-            return default(R);
+            return visitor.visit(this);            
         }
     }
 
@@ -167,8 +170,7 @@ namespace MiniPL {
         }   
 
         public override R accept<R>(IVisitor<R> visitor) {
-            // return visitor.visit(this);
-            return default(R);
+            return visitor.visit(this);            
         }     
     }
 
@@ -242,6 +244,8 @@ namespace MiniPL {
 
         public BinOpNode(Token token) {
             this.value = token.value;
+            this.row = token.row;
+            this.col = token.col;
             generateId();
         }
 
@@ -255,6 +259,8 @@ namespace MiniPL {
     public class UnOpNode : Node {
         public UnOpNode(Token token) {
             this.value = token.value;
+            this.row = token.row;
+            this.col = token.col;
             generateId();
         }
         public override R accept<R>(IVisitor<R> visitor) {
@@ -270,6 +276,8 @@ namespace MiniPL {
         public IntNode(Token token) {
             this.value = token.value;
             this.type = token.type;
+            this.row = token.row;
+            this.col = token.col;
             generateId();
         }
         public override R accept<R>(IVisitor<R> visitor) {
@@ -283,6 +291,8 @@ namespace MiniPL {
         public StrNode(Token token) {
             this.value = token.value;
             this.type = token.type;
+            this.row = token.row;
+            this.col = token.col;
             generateId();
         }
         public override R accept<R>(IVisitor<R> visitor) {
@@ -294,6 +304,8 @@ namespace MiniPL {
         public BoolNode(Token token) {
             this.value = token.value;
             this.type = token.type;
+            this.row = token.row;
+            this.col = token.col;
             generateId();
         }
         public override R accept<R>(IVisitor<R> visitor) {
@@ -305,7 +317,8 @@ namespace MiniPL {
     public class IdNode : Node {        
         public IdNode(Token token) {
             this.value = token.value;
-            this.type = token.type;          
+            this.row = token.row;
+            this.col = token.col;
             generateId();
         }
         public override R accept<R>(IVisitor<R> visitor) {

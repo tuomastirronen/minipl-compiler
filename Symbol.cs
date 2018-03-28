@@ -34,7 +34,7 @@ namespace MiniPL {
                     found = true;                  
             }
             if (!found) {
-                new SemanticError("Semantic Error: " + name + " does not exist in this context.");
+                // new SemanticError("Semantic Error: " + name + " does not exist in this context.");
             }            
         }
 
@@ -45,7 +45,7 @@ namespace MiniPL {
                     return symbol.type;
             }
             if (!found) {
-                new SemanticError("Semantic Error: " + name + " does not exist in this context.");
+                // new SemanticError("Semantic Error: " + name + " does not exist in this context.");
             }
             return null;
         }
@@ -58,31 +58,7 @@ namespace MiniPL {
                     return symbol.value;
             }
             if (!found) {
-                new SemanticError("Semantic Error: " + name + " does not exist in this context.");
-            }
-            return null;
-        }
-
-        public static int lookupInt(string name) {            
-            bool found = false;            
-            foreach (var symbol in symbols) {
-                if(symbol.name.Equals(name))                    
-                    return Int32.Parse(symbol.value);
-            }
-            if (!found) {
-                new SemanticError("Semantic Error: " + name + " does not exist in this context.");
-            }
-            return -1;
-        }
-
-        public static string lookupString(string name) {            
-            bool found = false;            
-            foreach (var symbol in symbols) {
-                if(symbol.name.Equals(name))                    
-                    return symbol.value;
-            }
-            if (!found) {
-                new SemanticError("Semantic Error: " + name + " does not exist in this context.");
+                // new SemanticError("Semantic Error: " + name + " does not exist in this context.");
             }
             return null;
         }

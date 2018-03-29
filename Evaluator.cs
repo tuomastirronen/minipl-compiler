@@ -95,7 +95,7 @@ namespace MiniPL {
         }
         
         object IVisitor<object>.visit(StrNode node) {            
-            return node.value;
+            return Convert.ToString(node.value);
         }
 
         object IVisitor<object>.visit(BoolNode node) {            

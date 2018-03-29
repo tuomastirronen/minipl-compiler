@@ -145,13 +145,42 @@ namespace MiniPL {
 
             // string literal
             else if (c == '"') {
+                
                 c = next();
-                string s = c.ToString();                
-                while (lookAhead() != '"') {
-                    c = next();
-                    s += c.ToString();
+                string s = "";
+
+                while (c != '"') {
+                    s += c.ToString();                    
+                    // special characters
+                    if (c == '\\') {
+                        s = s.Remove(s.Length - 1); // remove the \ from built string            
+                        string special = lookAhead().ToString();                           
+                        switch (special)
+                        {
+                            case "n":
+                                c = '\n';
+                                s += c.ToString();
+                                break;
+                            case "t":
+                                c = '\t';
+                                s += c.ToString();
+                                break;
+                            case "\"":                                
+                                c = '"';                                
+                                s += c.ToString();
+                                break;
+                            default:
+                                Console.WriteLine(special.Length);
+                                s += special; // not so special                         
+                                break;
+                        }
+                        
+                        c = next();
+                    }                    
+                    c = next();                    
+                    // Console.WriteLine("c at the moment: " + c);
                 }
-                next(); // eat closing "
+                // next(); // eat closing "                
                 return createToken(Token.STRING, s.ToString());                
             }
             

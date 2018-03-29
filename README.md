@@ -34,13 +34,12 @@ print v;
  ```
  
  ```
-var count : int := 0;
-print "\n**************";     /* box top */
+print "\n**************";       /* box top */
 var x : int;
 for x in 1..8 do
     print "\n*            *";   /* box sides   */
 end for;
-print "\n**************\n";   /* bottom of the box */
+print "\n**************\n";     /* bottom of the box */
 ```
 
 ## Context-free grammar

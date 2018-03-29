@@ -19,6 +19,7 @@ for x in 0..nTimes-1 do
 end for;
 assert (x = nTimes);
 ```
+
 ```
 print "Give a number";
 var n : int;
@@ -31,6 +32,16 @@ end for;
 print "The result is: ";
 print v;
  ```
+ 
+ ````
+var count : int := 0;
+print "\n**************";     /* box top */
+var x : int;
+for x in 1..8 do
+    print "\n*            *";   /* box sides   */
+end for;
+print "\n**************\n";   /* bottom of the box */
+```
 
 ## Context-free grammar
 

@@ -1,8 +1,6 @@
 error handling
     - recovering from errors
 
-print newline
-
 comment code
 
 documentation

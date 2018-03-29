@@ -33,7 +33,7 @@ print "The result is: ";
 print v;
  ```
  
- ````
+ ```
 var count : int := 0;
 print "\n**************";     /* box top */
 var x : int;

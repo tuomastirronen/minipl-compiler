@@ -25,41 +25,26 @@ namespace MiniPL {
             symbols.Add(new Symbol(name, type));
         }
 
-        public static void assign(string name, string value) {
-            // Console.WriteLine(">>> Assign " + name + " = " + value);
-            bool found = false;
+        public static void assign(string name, string value) {            
             foreach (var symbol in symbols) {
                 if(symbol.name.Equals(name))
-                    symbol.value = value;
-                    found = true;                  
-            }
-            if (!found) {
-                // new SemanticError("Semantic Error: " + name + " does not exist in this context.");
-            }            
+                    symbol.value = value;                              
+            }        
         }
 
-        public static string lookupType(string name) {
-            bool found = false;            
+        public static string lookupType(string name) {                      
             foreach (var symbol in symbols) {
                 if(symbol.name.Equals(name))
                     return symbol.type;
-            }
-            if (!found) {
-                // new SemanticError("Semantic Error: " + name + " does not exist in this context.");
-            }
+            }        
             return null;
         }
 
-        public static string lookup(string name) {
-            // Console.WriteLine(">>> Lookup " + name);
-            bool found = false;            
+        public static string lookup(string name) {                    
             foreach (var symbol in symbols) {
                 if(symbol.name.Equals(name))                    
                     return symbol.value;
-            }
-            if (!found) {
-                // new SemanticError("Semantic Error: " + name + " does not exist in this context.");
-            }
+            }                        
             return null;
         }
 	}    

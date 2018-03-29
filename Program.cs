@@ -10,16 +10,22 @@ namespace Compiler
             Parser p = new Parser(new Scanner(new Source(args[0])));
             ProgramNode ast = p.parse();
                         
-            // ast.mermaid("", true, true);
-            new SemanticAnalyzer(ast).analyze();    
-
-            // Interpret if no errors found
+            // If there are no lexical or syntax errors, prcodeed to semantic analysis       
             if (Error.errors.Count == 0) {
-                new Interpreter(ast).interpret();                    
+                ast.mermaid("", true, true);
+                new SemanticAnalyzer(ast).analyze();
+
+                // If there are no semantic errors, interpret the program
+                if (Error.errors.Count == 0) {
+                    new Interpreter(ast).interpret();                
+                }
+                else {
+                    Error.printErrors();
+                }
             }
             else {
                 Error.printErrors();
-            }
+            }            
 
             // sa.analyze();
             

@@ -20,6 +20,16 @@ namespace MiniPL {
             }            
         }
 
+        private void nextStatement() {
+            while (currentToken.type != Token.SCOL) {                
+                nextToken();
+                if (currentToken.type == Token.EOF) {
+                    return;
+                }
+            }
+            nextToken();            
+        }
+
         private bool accept(string type) {            
             return currentToken.type == type;
         }
@@ -29,29 +39,26 @@ namespace MiniPL {
         }
 
         private void match(string type) {
-            try
-            {
-                if (currentToken.type == type) {
-                nextToken();
-                }                
-                else {                
-                    new SyntaxError(currentToken, "Syntax Error: Expected " + type + ", got " + currentToken.type + " '" + currentToken.value + "'");
-                }  
+            if (currentToken.type == Token.UNKNOWN) { // There has been a lexical error
+                nextToken(); // recover from error by skipping to next token
             }
-            catch (System.Exception) // There has been a lexical error
-            {
-                nextToken();
-            }  
-                          
-        }
-        
-        private void match_keyword(string value) {                
-            if (currentToken.value == value) {
+            else if (currentToken.type == type) {
                 nextToken();
             }                
             else {                
+                new SyntaxError(currentToken, "Syntax Error: Expected " + type + ", got " + currentToken.type + " '" + currentToken.value + "'");
+                nextStatement();                
+            }
+        }
+        
+        private void match_keyword(string value) {
+            if (currentToken.value == value) {
+                nextToken();
+            }
+            else {
                 new SyntaxError(currentToken, "Syntax Error: Expected " + value + ", got " + currentToken.value);
-            }                
+                nextStatement();
+            }
         }
 
         public ProgramNode parse() {            
@@ -63,24 +70,24 @@ namespace MiniPL {
 
             ProgramNode program = new ProgramNode();
 
-            program.addChild(stmts());
+            program.addChild(block());
 
             return program;
         }
 
-        private Node stmts() {
-            Node stmts = new BlockNode();
+        private Node block() {
+            Node block = new BlockNode();
 
             while (scanner.hasNext()){                
-                stmts.addChild(stmt());
+                block.addChild(stmt());
             }
 
-            return stmts;
+            return block;
         }
 
-        private Node stmt() {
-            Node statement = new StatementNode();            
-
+        private Node stmt() {            
+            Node statement = new StatementNode();                      
+       
             if (currentToken.type == Token.KW) {
                 if (currentToken.value == "for") {
                     // for loop
@@ -151,7 +158,7 @@ namespace MiniPL {
                     match_keyword("var");
                     Node id = new IdNode(currentToken);
                     declaration.addChild(id);
-                    match(Token.ID);                        
+                    match(Token.ID);
                     match(Token.COL);
                     
                     if (accept_keyword("int")) {
@@ -167,8 +174,12 @@ namespace MiniPL {
                         match_keyword("bool");
                     }
                     
-
-                    else new SyntaxError(currentToken, "Syntax Error: Expected int, string or bool, got " + currentToken.value);
+                    else { 
+                        new SyntaxError(currentToken, "Syntax Error: Expected type int, string or bool, got '" + currentToken.value + "'");
+                        nextStatement();                        
+                        return null;
+                                         
+                    }
 
                     statement.addChild(declaration);
                     
@@ -182,6 +193,8 @@ namespace MiniPL {
                 } 
                 else {
                     new SyntaxError(currentToken, "Syntax Error: Expected keyword var, for, read, print or assert, got " + currentToken.value);                        
+                    statement = new StatementNode();                     
+                    return null;
                 }
                 match(Token.SCOL);
             }            
@@ -195,7 +208,7 @@ namespace MiniPL {
                 assignment.addChild(expr());
                 statement.addChild(assignment);
                 match(Token.SCOL);
-            }
+            }          
 
             return statement;
         }
@@ -215,8 +228,7 @@ namespace MiniPL {
                     break;
                 case "boolean":                    
                     node = new BoolNode(currentToken);
-                    match(Token.BOOL);
-                    Console.WriteLine("BOOLEAN");
+                    match(Token.BOOL);                    
                     break;
                 case "identifier":                    
                     node = new IdNode(currentToken);
@@ -233,7 +245,7 @@ namespace MiniPL {
                     node.addChild(factor());                    
                     break;
                 default:                    
-                    new SyntaxError(currentToken, "Syntax Error: Expected integer, string, bool, identifier or (, got " + currentToken.value);
+                    new SyntaxError(currentToken, "Syntax Error: Expected integer, string, bool, identifier or (, got " + currentToken.value);                                        
                     break;
             }
 

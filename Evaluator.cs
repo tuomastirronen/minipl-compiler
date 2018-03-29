@@ -50,7 +50,7 @@ namespace MiniPL {
         object IVisitor<object>.visit(BinOpNode node) {
             object left = evaluate(node.getLeft());
             object right = evaluate(node.getRight());
-                        
+            
             switch (node.value)
             {
                 case "+":

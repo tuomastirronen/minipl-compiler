@@ -72,7 +72,7 @@ namespace MiniPL {
 			Node left = node.getLeft();
 			Node right = node.getRight();
 			
-			left.accept(this);
+			left.accept(this);			
 			right.accept(this);
             			
 			checkSameType(left, right);			
@@ -169,12 +169,24 @@ namespace MiniPL {
 			node.type = Token.BOOL;			
 			return node.type;
 		}
-        object IVisitor<object>.visit(IdNode node) {
-			node.type = SymbolTable.lookupType(node.value);			
-			return node.type;
+        object IVisitor<object>.visit(IdNode node) {			
+			string type = SymbolTable.lookupType(node.value);
+			string value = SymbolTable.lookup(node.value);
+			
+			if (value != null) {				
+				node.type = type;		
+				return node.type;
+			}			
+			else {				
+				new SemanticError(node, "Semantic Error: " + node.value + " does not exist in this context.");				
+			}
+			return null;
 		}
 
 		public void checkOperationIsAllowed(Node operation, Node left, Node right) {
+			if (SymbolTable.lookup(left.value)  == null || SymbolTable.lookup(right.value)  == null) {
+				return; // return as one of the children does not exist
+			}
 			bool allowed = false;
 			foreach (var rule in allowedOperations) {
 				if (operation.value.Equals(rule[0]) & left.type.Equals(rule[1]) & right.type.Equals(rule[2])) {
@@ -187,6 +199,9 @@ namespace MiniPL {
 		}
 
 		public void checkSameType(Node left, Node right) {			
+			if (SymbolTable.lookup(left.value)  == null || SymbolTable.lookup(right.value)  == null) {
+				return; // return as one of the children does not exist
+			}
 			bool allowed = false;
 			foreach (var rule in allowedAssignments) {
 				if (left.type.Equals(rule[0]) & right.type.Equals(rule[1])) {

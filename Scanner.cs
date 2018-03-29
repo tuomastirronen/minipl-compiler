@@ -184,8 +184,9 @@ namespace MiniPL {
                 return createToken(Token.STRING, s.ToString());                
             }
             
-            new LexicalError(createToken(Token.UNKNOWN, c.ToString()));
-            return null;
+            Token unknown = createToken(Token.UNKNOWN, c.ToString());
+            new LexicalError(unknown);
+            return unknown;
         }
 	}
 }

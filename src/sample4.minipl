@@ -3,4 +3,4 @@ var x : int;
 for x in 1..8 do
     print "\n*            *";   /* box sides   */
 end for;
-print "\n**************\n";     /* bottom of the box */
+print "\n**************\n";

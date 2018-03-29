@@ -11,8 +11,7 @@ namespace MiniPL {
         public int id;
         public string value;
         public string type;
-        public List<Node> children = new List<Node>();
-        public static SymbolTable symbolTable = new SymbolTable();
+        public List<Node> children = new List<Node>();        
         static int count = 0; // for mermaid
         public int row;
         public int col;
@@ -103,7 +102,10 @@ namespace MiniPL {
         }
 
         public override string ToString() {
-            return this.GetType().Name + "->" + this.value;
+            if (this.value != null) {
+                return this.GetType().Name + "->" + this.value;
+            }            
+            return this.GetType().Name;
         }
     }
 

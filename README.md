@@ -1,4 +1,4 @@
-# MiniPL-compiler
+# MiniPL Interpreter
 
 
 ## Sample programs

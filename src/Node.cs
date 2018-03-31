@@ -43,22 +43,7 @@ namespace MiniPL {
             return children[1];
         }
 
-        public abstract R accept<R>(IVisitor<R> visitor);
-
-        public bool hasStringChild() {            
-            foreach (Node child in children) {                
-                if (child is StrNode) {
-                    return true;
-                }
-                else if (child is IdNode) {
-                    if (SymbolTable.lookupType(child.value) == Token.STRING) {
-                        return true;
-                    }                    
-                }                
-            }
-            return false;
-
-        }
+        public abstract R accept<R>(IVisitor<R> visitor);    
 
         protected void generateId() {
             count++;
@@ -155,8 +140,8 @@ namespace MiniPL {
     }
 
     // Control
-    public class ControlNode : Node {
-        public ControlNode() {                  
+    public class ForControlNode : Node {
+        public ForControlNode() {                  
             generateId();
         }
 
@@ -239,10 +224,6 @@ namespace MiniPL {
 
     // Binary operation
     public class BinOpNode : Node {
-        public BinOpNode(string operand) {
-            this.value = operand;
-            generateId();
-        }
 
         public BinOpNode(Token token) {
             this.value = token.value;

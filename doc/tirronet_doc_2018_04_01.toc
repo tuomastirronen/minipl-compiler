@@ -1,0 +1,8 @@
+\contentsline {section}{\numberline {1}Solution architecture}{3}
+\contentsline {section}{\numberline {2}Token patterns}{4}
+\contentsline {section}{\numberline {3}Context-free grammar}{4}
+\contentsline {section}{\numberline {4}Abstract syntax trees}{5}
+\contentsline {section}{\numberline {5}Error handling}{7}
+\contentsline {section}{\numberline {6}Testing}{7}
+\contentsline {section}{\numberline {7}Limitations}{7}
+\contentsline {section}{\numberline {8}Usage}{7}

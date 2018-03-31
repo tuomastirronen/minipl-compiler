@@ -95,7 +95,7 @@ namespace MiniPL {
                     match_keyword("for");
 
                     // Control node
-                    Node control = new ControlNode();
+                    Node control = new ForControlNode();
 
                     // Condition
                     Node condition = new ForConditionNode();             

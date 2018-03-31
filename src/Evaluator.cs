@@ -16,7 +16,7 @@ namespace MiniPL {
         object IVisitor<object>.visit(AssignmentNode node) { return 1; }
 
         object IVisitor<object>.visit(ForLoopNode node) { return 1; }
-        object IVisitor<object>.visit(ControlNode node) { return 1; }
+        object IVisitor<object>.visit(ForControlNode node) { return 1; }
         object IVisitor<object>.visit(ForConditionNode node) { return 1; }
         
         object IVisitor<object>.visit(PrintNode node) { return 1; }
@@ -99,7 +99,7 @@ namespace MiniPL {
         }
 
         object IVisitor<object>.visit(BoolNode node) {            
-            return Convert.ToInt32(node.value);
+            return Convert.ToBoolean(node.value);
         }
 
         object IVisitor<object>.visit(IdNode node) {            

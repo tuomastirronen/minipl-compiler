@@ -1,0 +1,10 @@
+/Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/src/bin/release/netcoreapp2.0/Compiler.deps.json
+/Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/src/bin/release/netcoreapp2.0/Compiler.runtimeconfig.json
+/Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/src/bin/release/netcoreapp2.0/Compiler.runtimeconfig.dev.json
+/Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/src/bin/release/netcoreapp2.0/Compiler.dll
+/Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/src/bin/release/netcoreapp2.0/Compiler.pdb
+/Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/src/obj/release/netcoreapp2.0/Compiler.csproj.CoreCompileInputs.cache
+/Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/src/obj/release/netcoreapp2.0/Compiler.AssemblyInfoInputs.cache
+/Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/src/obj/release/netcoreapp2.0/Compiler.AssemblyInfo.cs
+/Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/src/obj/release/netcoreapp2.0/Compiler.dll
+/Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/src/obj/release/netcoreapp2.0/Compiler.pdb

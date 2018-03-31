@@ -13,11 +13,8 @@ namespace MiniPL {
             this.msg = "Unknown error";
         }
 
-        public void handleError() {
-            // throw new System.Exception(this.msg);              
-            errors.Add(this);            
-            // Console.WriteLine(this);
-            // Environment.Exit(0);
+        public void handleError() {            
+            errors.Add(this);
         }
 
         public static void printErrors() {
@@ -64,5 +61,21 @@ namespace MiniPL {
             this.col = node.col;
             handleError();
         }      
+    }
+
+    public class RuntimeError : Error {        
+        public RuntimeError() { }
+
+        public RuntimeError(Node node, string msg) {
+            this.msg = msg;
+            this.row = node.row;
+            this.col = node.col;
+            handleError();
+        }
+        public void handleError() {            
+            errors.Add(this);      
+            printErrors();
+            Environment.Exit(0);
+        }
     }
 }

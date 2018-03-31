@@ -9,7 +9,7 @@ namespace MiniPL {
         R visit(DeclarationNode node);
         R visit(AssignmentNode node);
         R visit(ForLoopNode node);
-        R visit(ControlNode node);
+        R visit(ForControlNode node);
         R visit(ForConditionNode node);
         
         R visit(AssertNode node);
@@ -22,6 +22,5 @@ namespace MiniPL {
         R visit(StrNode node);
         R visit(BoolNode node);
         R visit(IdNode node);
-    }
-    
+    }    
 }

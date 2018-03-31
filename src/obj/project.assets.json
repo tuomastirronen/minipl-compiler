@@ -670,11 +670,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/tuomastirronen/Desktop/uni/TK5/Compilers/Compiler/src/Compiler.csproj",
+      "projectUniqueName": "/Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/src/Compiler.csproj",
       "projectName": "Compiler",
-      "projectPath": "/Users/tuomastirronen/Desktop/uni/TK5/Compilers/Compiler/src/Compiler.csproj",
+      "projectPath": "/Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/src/Compiler.csproj",
       "packagesPath": "/Users/tuomastirronen/.nuget/packages/",
-      "outputPath": "/Users/tuomastirronen/Desktop/uni/TK5/Compilers/Compiler/src/obj/",
+      "outputPath": "/Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/src/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"

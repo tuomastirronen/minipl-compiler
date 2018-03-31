@@ -44,22 +44,22 @@ namespace MiniPL {
         }
 
         object IVisitor<object>.visit(ForLoopNode node) {
-            Node controlNode = node.getLeft();
+            Node ForControlNode = node.getLeft();
                         
             // Control variable initial assignment                        
-            int control = Convert.ToInt32(controlNode.getLeft().accept(new Evaluator()));
-            int times = Convert.ToInt32(controlNode.getRight().getRight().accept(new Evaluator()));
+            int control = Convert.ToInt32(ForControlNode.getLeft().accept(new Evaluator()));
+            int times = Convert.ToInt32(ForControlNode.getRight().getRight().accept(new Evaluator()));
 
             for (int i = control; i <= times; i++)
             {
-                SymbolTable.assign(controlNode.getLeft().getLeft().value, i.ToString());
+                SymbolTable.assign(ForControlNode.getLeft().getLeft().value, i.ToString());
                 node.getRight().accept(this);
             }
 
             return null;
         }
 
-        object IVisitor<object>.visit(ControlNode node) { return null; }
+        object IVisitor<object>.visit(ForControlNode node) { return null; }
         object IVisitor<object>.visit(ForConditionNode node) { return null; }
 
         object IVisitor<object>.visit(PrintNode node) {
@@ -69,9 +69,22 @@ namespace MiniPL {
         }
 
         object IVisitor<object>.visit(ReadNode node) {
+            Node child = node.getLeft();            
             Console.Write(">>> ");
-            string value = Console.ReadLine();
-            SymbolTable.assign(node.getLeft().value, value);
+            string value = Console.ReadLine();            
+            if (child.type == Token.INT) {                
+                try {
+                    int value_i = int.Parse(value);
+                    SymbolTable.assign(child.value, value_i.ToString());
+                }
+                catch {
+                    Console.WriteLine("ERROR");
+                    new RuntimeError(child, "Runtime Error: Could not parse interger from the input.");
+                }
+            }
+            else {
+                SymbolTable.assign(child.value, value);
+            }      
             return null;
         }
 

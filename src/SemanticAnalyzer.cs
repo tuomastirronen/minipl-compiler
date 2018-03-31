@@ -80,14 +80,14 @@ namespace MiniPL {
 		}
 
         object IVisitor<object>.visit(ForLoopNode node) {
-			Node controlNode = node.getLeft();
+			Node ForControlNode = node.getLeft();
 			Node statements = node.getRight();
-			controlNode.accept(this);
+			ForControlNode.accept(this);
 			statements.accept(this);			
 			return 1;
 		}
 
-		object IVisitor<object>.visit(ControlNode node) {			
+		object IVisitor<object>.visit(ForControlNode node) {			
 			Node assignment = node.getLeft();
 			Node conditionNode = node.getRight();
 
@@ -103,14 +103,16 @@ namespace MiniPL {
 			Node left = node.getLeft();
 			Node right = node.getRight();
 			left.accept(this);
-			right.accept(this);
+			right.accept(this);	
 
-			// Only allow integers in range
-			if (!left.type.Equals(Token.INT)) {				
-				new SemanticError(left, "Semantic Error: Expected integer, got " + left.type);
-			}
-			if (!right.type.Equals(Token.INT)) {
-				new SemanticError(right, "Semantic Error: Expected integer, got " + right.type);				
+			// Only allow integers in range			
+			if (!(left != null & right != null)) { // Cannot proceed if there has been an error
+				if (!left.type.Equals(Token.INT)) {				
+					new SemanticError(left, "Semantic Error: Expected integer, got " + left.type);
+				}
+				if (!right.type.Equals(Token.INT)) {
+					new SemanticError(right, "Semantic Error: Expected integer, got " + right.type);
+				}
 			}
 			return null;
 		}
@@ -120,7 +122,10 @@ namespace MiniPL {
 			return null;
 		}
 
-        object IVisitor<object>.visit(ReadNode node) { return 1; }
+        object IVisitor<object>.visit(ReadNode node) { 
+			node.getLeft().accept(this);
+			return null;
+		 }
 
 		object IVisitor<object>.visit(AssertNode node) {
 			Node child = node.getLeft();
@@ -171,8 +176,7 @@ namespace MiniPL {
 		}
         object IVisitor<object>.visit(IdNode node) {			
 			string type = SymbolTable.lookupType(node.value);
-			string value = SymbolTable.lookup(node.value);
-			
+			string value = SymbolTable.lookup(node.value);			
 			if (value != null) {				
 				node.type = type;		
 				return node.type;

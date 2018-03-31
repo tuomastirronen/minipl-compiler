@@ -1,13 +1,13 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.26)  31 MAR 2018 17:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.26)  31 MAR 2018 20:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/doc/tirron
-et_doc_2018_04_01.tex
+**/Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/tirronet/d
+oc/tirronet_doc_2018_04_01.tex
 
-(/Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/doc/tirrone
-t_doc_2018_04_01.tex
+(/Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/tirronet/do
+c/tirronet_doc_2018_04_01.tex
 LaTeX2e <2017-04-15>
 Babel <3.10> and hyphenation patterns for 84 language(s) loaded.
 (/usr/local/texlive/2017/texmf-dist/tex/latex/base/article.cls
@@ -932,12 +932,12 @@ Package pdftex.def Info: appendix/syntax.pdf, page3 used on input line 160.
 (./tirronet_doc_2018_04_01.aux) ) 
 Here is how much of TeX's memory you used:
  7509 strings out of 492995
- 104998 string characters out of 6132704
- 203108 words of memory out of 5000000
+ 105025 string characters out of 6132704
+ 204108 words of memory out of 5000000
  10915 multiletter control sequences out of 15000+600000
  9398 words of font info for 35 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 40i,18n,51p,1076b,1213s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 40i,18n,51p,1085b,1213s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type
 1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/
@@ -950,7 +950,7 @@ amsfonts/cm/cmr8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmti10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfo
 nts/cm/cmtt10.pfb>
-Output written on tirronet_doc_2018_04_01.pdf (12 pages, 480080 bytes).
+Output written on tirronet_doc_2018_04_01.pdf (12 pages, 479751 bytes).
 PDF statistics:
  149 PDF objects out of 1000 (max. 8388607)
  86 compressed objects within 1 object stream

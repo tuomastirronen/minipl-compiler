@@ -72,7 +72,7 @@ The evaluator is responsible for evaluating the different expressions in the sou
 \section{Context-free grammar}
 \begin{gather*}
     program \Rightarrow block \\
-    block \Rightarrow statement \ (statement)* \\
+    block \Rightarrow statement \ ";" \ (statement \ ";")* \\
     statement \\
     \quad \Rightarrow "var" \ identifier \ ":" \ type \ [ ":=" expression ] \\
     \quad \Rightarrow identifier \ ":=" \ expression \\

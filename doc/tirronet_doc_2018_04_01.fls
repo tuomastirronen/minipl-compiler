@@ -1,8 +1,8 @@
-PWD /Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/doc
+PWD /Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/tirronet/doc
 INPUT /usr/local/texlive/2017/texmf.cnf
 INPUT /usr/local/texlive/2017/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2017/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT /Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/doc/tirronet_doc_2018_04_01.tex
+INPUT /Users/tuomastirronen/Desktop/uni/TK5/Compilers/minipl-interpreter/tirronet/doc/tirronet_doc_2018_04_01.tex
 OUTPUT tirronet_doc_2018_04_01.log
 INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/base/article.cls

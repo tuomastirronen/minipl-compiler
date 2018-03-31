@@ -1,6 +1,6 @@
-print "\n**************";       /* box top */
+print "\n**************";
 var x : int;
 for x in 1..8 do
-    print "\n*            *";   /* box sides   */
+    print "\n*            *";
 end for;
 print "\n**************\n";

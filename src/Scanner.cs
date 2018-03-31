@@ -14,18 +14,23 @@ namespace MiniPL {
             this.source = source;            
         }
 
+        // Wrapper to conveniently create a token 
         private Token createToken(string type, string value) {
             return new Token(type, value, row, col - value.Length);
         }
         
+        // Check if the source has more content
         public bool hasNext() {            
             return cursor < source.content.Length;
         }
+
+        // Get next character from the source
         private char next(int steps = 1) {
             cursor += (steps);
             col++;            
             return source.content[cursor - 1];
         }
+
         private char lookAhead(int steps = 0) {            
             return source.content[cursor + steps];               
         }
@@ -39,18 +44,22 @@ namespace MiniPL {
             }            
         }
 
+        // Function to find the next token from the source code
+        // If no valid token is found, an error is created and a token with type 'unknown' is returned
+        // Called by the parser        
         public Token nextToken() {            
             skipWhiteSpace();
             char c = next();            
             
-            // special
+            // Special
             if (Array.IndexOf(new []{'(', ')', ':', ';'}, c) > -1) {
+                
+                // Assignment
                 if (c == ':' && lookAhead() == '=') {
                     c = next();
                     return createToken(Token.ASS, ":=");                    
                 }
-                else {
-                    // TODO
+                else {                    
                     switch (c)
                     {
                         case '(':
@@ -67,15 +76,16 @@ namespace MiniPL {
                 }
             }
 
-            // range
+            // Range
             else if (c == '.' && lookAhead() == '.') {
                 c = next();
                 return createToken(Token.RANGE, "..");                
             }
 
-            // operation
+            // Operation
             else if (Array.IndexOf(new []{'+', '-', '*', '/', '<', '=', '&', '!'}, c) > -1) {                
-                // comments                
+                
+                // Comments
                 if (c == '/' && lookAhead() == '*') {                        
                     c = next();
                     while (true) {
@@ -95,6 +105,7 @@ namespace MiniPL {
                     c = next();                    
                     return nextToken();
                 }
+                
                 else {
                     switch (c)
                     {
@@ -116,13 +127,12 @@ namespace MiniPL {
                             return createToken(Token.NEG, c.ToString());
                         default:
                             break;
-                    }
-                    // TODO
-                    return createToken(Token.RANGE, "..");                                                        
+                    }                                                                        
                 }                
             }
 
-            // identifier or keyword
+            // Identifier or keyword
+            // Token constructor will decide if we are dealing with a reserved keyword
             else if (char.IsLetter(c)) {
                 string s = c.ToString();                
                 while (char.IsLetter(lookAhead())) {
@@ -132,7 +142,7 @@ namespace MiniPL {
                 return createToken(Token.ID, s.ToString());                
             }
 
-            // integer
+            // Integer
             else if (char.IsDigit(c)) {
                 string i = c.ToString();                
                 while (char.IsDigit(lookAhead())) {
@@ -143,7 +153,7 @@ namespace MiniPL {
                 return createToken(Token.INT, i.ToString());                
             }
 
-            // string literal
+            // String literal
             else if (c == '"') {
                 
                 c = next();
@@ -151,7 +161,7 @@ namespace MiniPL {
 
                 while (c != '"') {
                     s += c.ToString();                    
-                    // special characters
+                    // Escape special characters
                     if (c == '\\') {
                         s = s.Remove(s.Length - 1); // remove the \ from built string            
                         string special = lookAhead().ToString();                           
@@ -177,13 +187,12 @@ namespace MiniPL {
                         
                         c = next();
                     }                    
-                    c = next();                    
-                    // Console.WriteLine("c at the moment: " + c);
-                }
-                // next(); // eat closing "                
+                    c = next();
+                }                
                 return createToken(Token.STRING, s.ToString());                
             }
             
+            // Nothing valid was found
             Token unknown = createToken(Token.UNKNOWN, c.ToString());
             new LexicalError(unknown);
             return unknown;

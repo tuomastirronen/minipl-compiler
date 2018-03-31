@@ -63,7 +63,7 @@ The evaluator is responsible for evaluating the different expressions in the sou
 \begin{gather*}
     integer \Rightarrow digit \ digit* \\
     boolean \Rightarrow 0 \ | \ 1 \\
-    string \Rightarrow letter \ letter* \\    
+    string \Rightarrow letter \ (letter \ | \ digit)* \\
     identifier \Rightarrow letter \ (letter \ | \ digit)* \\
     letter \Rightarrow  A \ | \ B \ | \ . . . \ | \ Z \ | \ a \ | \ b \ | \ . . . \ | \ z \\
     digit \Rightarrow  0 \ | \ 1 \ | \ 2 \ | \ . . . \ | \ 9

@@ -31,60 +31,17 @@ for i in 1..n do
 end for;
 print "The result is: ";
 print v;
- ```
+```
  
- ```
-print "\n**************";       /* box top */
+```
+print "\n**************";
 var x : int;
 for x in 1..8 do
-    print "\n*            *";   /* box sides   */
+    print "\n*            *";
 end for;
-print "\n**************\n";     /* bottom of the box */
+print "\n**************\n";
 ```
 
-## Context-free grammar
+## Usage
 
-#### prog
-* stmts
-
-#### stmts
-* stmt ';' [ stmt ';' ]
-
-#### stmt 
-* 'var' var_ident ':' type [ ':=' expr ]
-* var_ident **:=** expr
-* 'for' var_ident 'in' expr '..' expr 'do' stmts 'end' 'for'
-* 'read' var_ident
-* 'print' expr
-* 'assert' '(' expr ')'
-
-#### expr
-* opnd op opnd
-* [ unary_op ] opnd
- 
-#### opnd 
-* int
-* string
-* var_ident
-* '(' expr ')'
-
-#### type
-* 'int'
-* 'string'
-* 'bool'
-
-#### var_ident
-* ident
-
-#### reserved keyword
-* 'var'
-* 'for'
-* 'end'
-* 'in'
-* 'do'
-* 'read'
-* 'print'
-* 'int'
-* 'string'
-* 'bool'
-* 'assert'
+    dotnet run <your_program>

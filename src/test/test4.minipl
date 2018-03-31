@@ -1,0 +1,2 @@
+var y ? string := "yo";
+y := print y;

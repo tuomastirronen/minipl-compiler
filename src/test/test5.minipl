@@ -1,0 +1,8 @@
+var x : int;
+x := "asdf";
+print x;
+print z;
+var i : string;
+for i in 1..10 do
+  print i;
+end for;

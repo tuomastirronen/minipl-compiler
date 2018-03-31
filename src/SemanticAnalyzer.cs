@@ -73,8 +73,8 @@ namespace MiniPL {
 			Node right = node.getRight();
 			
 			left.accept(this);			
-			right.accept(this);
-            			
+			right.accept(this);			
+
 			checkSameType(left, right);			
 			return null;
 		}
@@ -202,13 +202,11 @@ namespace MiniPL {
 			}
 		}
 
-		public void checkSameType(Node left, Node right) {			
-			if (SymbolTable.lookup(left.value)  == null || SymbolTable.lookup(right.value)  == null) {
-				return; // return as one of the children does not exist
-			}
-			bool allowed = false;
-			foreach (var rule in allowedAssignments) {
+		public void checkSameType(Node left, Node right) {		
+			bool allowed = false;			
+			foreach (var rule in allowedAssignments) {				
 				if (left.type.Equals(rule[0]) & right.type.Equals(rule[1])) {
+					
 					allowed = true;
 				}				
 			}

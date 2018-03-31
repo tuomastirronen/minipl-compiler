@@ -6,14 +6,22 @@
 \usepackage{listings}
 \usepackage[section]{placeins}
 \usepackage{pdfpages}
+\usepackage{datetime}
 
 \graphicspath{ {images/} }
 
 \begin{document}
 \title{MiniPL Interpreter}
+
+\title{%
+    MiniPL Interpreter \\
+    \large Compilers, CSM14204
+}
+
 \author{Tuomas Tirronen}
-\date{\today}
-% \level{CSM14204 Compilers}
+
+\date{\today \ \currenttime}
+
 \maketitle
 \newpage
 
@@ -121,13 +129,18 @@ Once there are no semantic errors after the analysis, the source program will be
 The interpreter will then detect runtime errors, that can be derived from user interaction, namely from providing invalid input for the \textit{read} operation.
 \par
 The evaluator assumes all the possible errors are found during previous components in the pipeline, so it does not make use of the error component.
+
 \section{Testing}
+Testing is done by running three programs; three of which are valid and two are invalid. The latter set aims to identify lexical, syntax and semantic errors.
+\par
+The test programs can be found from the directroy \textit{src/test}.
 \section{Limitations}
 \par
 The known limitations and bugs for the interpreter are the following:
 
 \begin{itemize}
     \item Comment at the end of the source program will cause the scanner to break.
+    \item Comments will also confuse the row numbers
     \item The symbol table is not scoped
     \item Testing is not comprehensive
     \item Code is not properly commented
@@ -142,7 +155,7 @@ The interpreter requires to have Microsoft .NET environment installed. To interp
 }
 
 \appendix
-\includepdf{appendix/assignment.pdf}
+\includepdf[pages={1-2}]{appendix/assignment.pdf}
 \appendix
-\includepdf{appendix/syntax.pdf}
+\includepdf[pages={1-3}]{appendix/syntax.pdf}
 \end{document}

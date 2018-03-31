@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.26)  31 MAR 2018 17:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.26)  31 MAR 2018 17:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -573,21 +573,86 @@ File: pppdftex.def 2017/01/14 v0.5h Pdfpages driver for pdfTeX (AM)
 \c@AM@survey=\count115
 \AM@templatesizebox=\box31
 )
+(/usr/local/texlive/2017/texmf-dist/tex/latex/datetime/datetime.sty
+Package: datetime 2015/03/20 v2.60 Date Time Package
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2017/01/02 v2.4 e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count116
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/fmtcount/fmtcount.sty
+Package: fmtcount 2015/05/05 v3.01
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
+
+(/usr/local/texlive/2017/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2017/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks26
+\XKV@tempa@toks=\toks27
+)
+\XKV@depth=\count117
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+(/usr/local/texlive/2017/texmf-dist/tex/latex/fmtcount/fcprefix.sty
+Package: fcprefix 2012/09/28
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/fmtcount/fcnumparser.sty
+Package: fcnumparser 2012/09/28
+\fc@digit@counter=\count118
+))
+\c@padzeroesN=\count119
+\fc@tmpcatcode=\count120
+\@DT@modctr=\count121
+\@ordinalctr=\count122
+\@orgargctr=\count123
+\@strctr=\count124
+\@tmpstrctr=\count125
+\@DT@loopN=\count126
+\@DT@X=\count127
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/fmtcount/fc-english.def
+File: fc-english.def 2013/08/17
+))
+(/usr/local/texlive/2017/texmf-dist/tex/latex/datetime/datetime-defaults.sty
+Package: datetime-defaults 2013/09/10
+)
+\@day=\count128
+\@month=\count129
+\@year=\count130
+\c@HOUR=\count131
+\c@HOURXII=\count132
+\c@MINUTE=\count133
+\c@TOHOUR=\count134
+\c@TOMINUTE=\count135
+\c@SECOND=\count136
+\currenthour=\count137
+\currentminute=\count138
+\currentsecond=\count139
+Package datetime Info: No datetime.cfg file found, using default settings on in
+put line 308.
+\@dtctr=\count140
+\dayofyear=\count141
+\dayofweek=\count142
+LaTeX Info: Redefining \today on input line 736.
+\dt@a=\toks28
+\dt@b=\toks29
+)
 (./tirronet_doc_2018_04_01.aux)
 \openout1 = `tirronet_doc_2018_04_01.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -625,17 +690,17 @@ LaTeX Font Info:    ... okay on input line 12.
 
 (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count116
+\scratchcounter=\count143
 \scratchdimen=\dimen138
 \scratchbox=\box32
-\nofMPsegments=\count117
-\nofMParguments=\count118
-\everyMPshowfont=\toks26
-\MPscratchCnt=\count119
+\nofMPsegments=\count144
+\nofMParguments=\count145
+\everyMPshowfont=\toks30
+\MPscratchCnt=\count146
 \MPscratchDim=\dimen139
-\MPnumerator=\count120
-\makeMPintoPDFobject=\count121
-\everyMPtoPDFconversion=\toks27
+\MPnumerator=\count147
+\makeMPintoPDFobject=\count148
+\everyMPtoPDFconversion=\toks31
 ) (/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2017/03/19 v0.25 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -682,7 +747,7 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\c@lstlisting=\count122
+\c@lstlisting=\count149
 \AtBeginShipoutBox=\box33
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/oberdiek/pdflscape.sty
@@ -700,128 +765,179 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 \openout3 = `tirronet_doc_2018_04_01.toc'.
 
  [2]
-<images/architecture.png, id=14, 562.1pt x 531.9875pt>
+<images/architecture.png, id=15, 562.1pt x 531.9875pt>
 File: images/architecture.png Graphic file (type png)
 
 <use images/architecture.png>
-Package pdftex.def Info: images/architecture.png used on input line 47.
+Package pdftex.def Info: images/architecture.png used on input line 55.
 (pdftex.def)             Requested size: 234.8775pt x 222.28867pt.
  [3 <./images/architecture.png>] [4]
-<images/ast.png, id=25, 834.11626pt x 747.79375pt>
+<images/ast.png, id=26, 834.11626pt x 747.79375pt>
 File: images/ast.png Graphic file (type png)
  <use images/ast.png>
-Package pdftex.def Info: images/ast.png used on input line 94.
+Package pdftex.def Info: images/ast.png used on input line 102.
 (pdftex.def)             Requested size: 375.80544pt x 336.91484pt.
 
 [5 <./images/ast.png>]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 102.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 110.
 
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 102.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 110.
 
-<images/sample1.png, id=31, 508.90125pt x 664.98438pt>
+<images/sample1.png, id=32, 508.90125pt x 664.98438pt>
 File: images/sample1.png Graphic file (type png)
 
 <use images/sample1.png>
-Package pdftex.def Info: images/sample1.png used on input line 108.
+Package pdftex.def Info: images/sample1.png used on input line 116.
 (pdftex.def)             Requested size: 328.82707pt x 429.69801pt.
  [6 <./images/sample1.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 137--143
+Underfull \hbox (badness 10000) in paragraph at lines 150--156
 
  []
 
-<appendix/assignment.pdf, id=36, 597.23125pt x 845.1575pt>
+<appendix/assignment.pdf, id=37, 597.23125pt x 845.1575pt>
 File: appendix/assignment.pdf Graphic file (type pdf)
 
 <use appendix/assignment.pdf>
-Package pdftex.def Info: appendix/assignment.pdf used on input line 145.
+Package pdftex.def Info: appendix/assignment.pdf used on input line 158.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: appendix/assignment.pdf Graphic file (type pdf)
  <use appendix/assignment.pdf>
-Package pdftex.def Info: appendix/assignment.pdf used on input line 145.
+Package pdftex.def Info: appendix/assignment.pdf used on input line 158.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 
-<appendix/assignment.pdf, id=39, page=1, 597.23125pt x 845.1575pt>
+<appendix/assignment.pdf, id=40, page=1, 597.23125pt x 845.1575pt>
 File: appendix/assignment.pdf Graphic file (type pdf)
 
 <use appendix/assignment.pdf, page 1>
-Package pdftex.def Info: appendix/assignment.pdf, page1 used on input line 145.
+Package pdftex.def Info: appendix/assignment.pdf, page1 used on input line 158.
 
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: appendix/assignment.pdf Graphic file (type pdf)
  <use appendix/assignment.pdf, page 1>
-Package pdftex.def Info: appendix/assignment.pdf, page1 used on input line 145.
+Package pdftex.def Info: appendix/assignment.pdf, page1 used on input line 158.
 
 (pdftex.def)             Requested size: 561.86221pt x 795.10587pt.
 
 [7]
 File: appendix/assignment.pdf Graphic file (type pdf)
  <use appendix/assignment.pdf, page 1>
-Package pdftex.def Info: appendix/assignment.pdf, page1 used on input line 145.
+Package pdftex.def Info: appendix/assignment.pdf, page1 used on input line 158.
 
 (pdftex.def)             Requested size: 561.86221pt x 795.10587pt.
 File: appendix/assignment.pdf Graphic file (type pdf)
 
 <use appendix/assignment.pdf, page 1>
-Package pdftex.def Info: appendix/assignment.pdf, page1 used on input line 145.
+Package pdftex.def Info: appendix/assignment.pdf, page1 used on input line 158.
 
 (pdftex.def)             Requested size: 561.86221pt x 795.10587pt.
 File: appendix/assignment.pdf Graphic file (type pdf)
  <use appendix/assignment.pdf, page 1>
-Package pdftex.def Info: appendix/assignment.pdf, page1 used on input line 145.
+Package pdftex.def Info: appendix/assignment.pdf, page1 used on input line 158.
 
 (pdftex.def)             Requested size: 561.86221pt x 795.10587pt.
 
 [8 <./appendix/assignment.pdf>]
-<appendix/syntax.pdf, id=67, 597.23125pt x 845.1575pt>
+<appendix/assignment.pdf, id=68, page=2, 597.23125pt x 845.1575pt>
+File: appendix/assignment.pdf Graphic file (type pdf)
+
+<use appendix/assignment.pdf, page 2>
+Package pdftex.def Info: appendix/assignment.pdf, page2 used on input line 158.
+
+(pdftex.def)             Requested size: 561.86221pt x 795.10587pt.
+File: appendix/assignment.pdf Graphic file (type pdf)
+ <use appendix/assignment.pdf, page 2>
+Package pdftex.def Info: appendix/assignment.pdf, page2 used on input line 158.
+
+(pdftex.def)             Requested size: 561.86221pt x 795.10587pt.
+File: appendix/assignment.pdf Graphic file (type pdf)
+
+<use appendix/assignment.pdf, page 2>
+Package pdftex.def Info: appendix/assignment.pdf, page2 used on input line 158.
+
+(pdftex.def)             Requested size: 561.86221pt x 795.10587pt.
+ [9 <./appendix/assignment.pdf>]
+<appendix/syntax.pdf, id=76, 597.23125pt x 845.1575pt>
 File: appendix/syntax.pdf Graphic file (type pdf)
 
 <use appendix/syntax.pdf>
-Package pdftex.def Info: appendix/syntax.pdf used on input line 147.
+Package pdftex.def Info: appendix/syntax.pdf used on input line 160.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: appendix/syntax.pdf Graphic file (type pdf)
  <use appendix/syntax.pdf>
-Package pdftex.def Info: appendix/syntax.pdf used on input line 147.
+Package pdftex.def Info: appendix/syntax.pdf used on input line 160.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 
-<appendix/syntax.pdf, id=70, page=1, 597.23125pt x 845.1575pt>
+<appendix/syntax.pdf, id=79, page=1, 597.23125pt x 845.1575pt>
 File: appendix/syntax.pdf Graphic file (type pdf)
 
 <use appendix/syntax.pdf, page 1>
-Package pdftex.def Info: appendix/syntax.pdf, page1 used on input line 147.
+Package pdftex.def Info: appendix/syntax.pdf, page1 used on input line 160.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: appendix/syntax.pdf Graphic file (type pdf)
  <use appendix/syntax.pdf, page 1>
-Package pdftex.def Info: appendix/syntax.pdf, page1 used on input line 147.
+Package pdftex.def Info: appendix/syntax.pdf, page1 used on input line 160.
 (pdftex.def)             Requested size: 561.86221pt x 795.10587pt.
 File: appendix/syntax.pdf Graphic file (type pdf)
 
 <use appendix/syntax.pdf, page 1>
-Package pdftex.def Info: appendix/syntax.pdf, page1 used on input line 147.
+Package pdftex.def Info: appendix/syntax.pdf, page1 used on input line 160.
 (pdftex.def)             Requested size: 561.86221pt x 795.10587pt.
 File: appendix/syntax.pdf Graphic file (type pdf)
  <use appendix/syntax.pdf, page 1>
-Package pdftex.def Info: appendix/syntax.pdf, page1 used on input line 147.
+Package pdftex.def Info: appendix/syntax.pdf, page1 used on input line 160.
 (pdftex.def)             Requested size: 561.86221pt x 795.10587pt.
 File: appendix/syntax.pdf Graphic file (type pdf)
 
 <use appendix/syntax.pdf, page 1>
-Package pdftex.def Info: appendix/syntax.pdf, page1 used on input line 147.
+Package pdftex.def Info: appendix/syntax.pdf, page1 used on input line 160.
 (pdftex.def)             Requested size: 561.86221pt x 795.10587pt.
- [9 <./appendix/syntax.pdf>]
+ [10 <./appendix/syntax.pdf>]
+<appendix/syntax.pdf, id=105, page=2, 597.23125pt x 845.1575pt>
+File: appendix/syntax.pdf Graphic file (type pdf)
+
+<use appendix/syntax.pdf, page 2>
+Package pdftex.def Info: appendix/syntax.pdf, page2 used on input line 160.
+(pdftex.def)             Requested size: 561.86221pt x 795.10587pt.
+File: appendix/syntax.pdf Graphic file (type pdf)
+ <use appendix/syntax.pdf, page 2>
+Package pdftex.def Info: appendix/syntax.pdf, page2 used on input line 160.
+(pdftex.def)             Requested size: 561.86221pt x 795.10587pt.
+File: appendix/syntax.pdf Graphic file (type pdf)
+
+<use appendix/syntax.pdf, page 2>
+Package pdftex.def Info: appendix/syntax.pdf, page2 used on input line 160.
+(pdftex.def)             Requested size: 561.86221pt x 795.10587pt.
+ [11 <./appendix/syntax.pdf>]
+<appendix/syntax.pdf, id=109, page=3, 597.23125pt x 845.1575pt>
+File: appendix/syntax.pdf Graphic file (type pdf)
+
+<use appendix/syntax.pdf, page 3>
+Package pdftex.def Info: appendix/syntax.pdf, page3 used on input line 160.
+(pdftex.def)             Requested size: 561.86221pt x 795.10587pt.
+File: appendix/syntax.pdf Graphic file (type pdf)
+ <use appendix/syntax.pdf, page 3>
+Package pdftex.def Info: appendix/syntax.pdf, page3 used on input line 160.
+(pdftex.def)             Requested size: 561.86221pt x 795.10587pt.
+File: appendix/syntax.pdf Graphic file (type pdf)
+
+<use appendix/syntax.pdf, page 3>
+Package pdftex.def Info: appendix/syntax.pdf, page3 used on input line 160.
+(pdftex.def)             Requested size: 561.86221pt x 795.10587pt.
+ [12 <./appendix/syntax.pdf>]
 (./tirronet_doc_2018_04_01.aux) ) 
 Here is how much of TeX's memory you used:
- 6325 strings out of 492995
- 88216 string characters out of 6132704
- 170019 words of memory out of 5000000
- 9765 multiletter control sequences out of 15000+600000
+ 7509 strings out of 492995
+ 104998 string characters out of 6132704
+ 203108 words of memory out of 5000000
+ 10915 multiletter control sequences out of 15000+600000
  9398 words of font info for 35 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,18n,43p,348b,1213s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 40i,18n,51p,1076b,1213s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type
 1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/
@@ -830,13 +946,14 @@ public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmr10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/pub
 lic/amsfonts/cm/cmr12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmr17.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmti10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmtt10.pfb>
-Output written on tirronet_doc_2018_04_01.pdf (9 pages, 449510 bytes).
+amsfonts/cm/cmr8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmti10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmtt10.pfb>
+Output written on tirronet_doc_2018_04_01.pdf (12 pages, 480080 bytes).
 PDF statistics:
- 129 PDF objects out of 1000 (max. 8388607)
- 75 compressed objects within 1 object stream
+ 149 PDF objects out of 1000 (max. 8388607)
+ 86 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 56 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 71 words of extra memory for PDF output out of 10000 (max. 10000000)
 

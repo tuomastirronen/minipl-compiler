@@ -11,8 +11,7 @@ namespace Compiler
             ProgramNode ast = p.parse();
                         
             // If there are no lexical or syntax errors, prcodeed to semantic analysis       
-            if (Error.errors.Count == 0) {
-                // ast.mermaid("", true, true);
+            if (Error.errors.Count == 0) {                
                 new SemanticAnalyzer(ast).analyze();
 
                 // If there are no semantic errors, interpret the program

@@ -72,7 +72,7 @@ namespace MiniPL {
             this.col = node.col;
             handleError();
         }
-        public void handleError() {            
+        new public void handleError() {            
             errors.Add(this);      
             printErrors();
             Environment.Exit(0);

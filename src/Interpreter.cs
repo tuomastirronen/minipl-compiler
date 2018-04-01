@@ -77,8 +77,7 @@ namespace MiniPL {
                     int value_i = int.Parse(value);
                     SymbolTable.assign(child.value, value_i.ToString());
                 }
-                catch {
-                    Console.WriteLine("ERROR");
+                catch {                    
                     new RuntimeError(child, "Runtime Error: Could not parse interger from the input.");
                 }
             }
